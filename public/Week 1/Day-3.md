@@ -624,6 +624,3 @@ navigator.serviceWorker.getRegistrations().then(console.log);
 | **Day 6** | Network Patterns | REST vs GraphQL, WebSockets, SSE, polling |
 | **Day 7** | Component Architecture | Design systems, atomic design, reusability |
 
----
-
-*Frontend System Design Series | Sajal Shrivastav | 2026*

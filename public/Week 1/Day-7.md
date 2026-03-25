@@ -620,6 +620,3 @@ SECURITY HEADERS (memorize all 5):
 | **Day 9** | Performance Metrics & Tools | Lighthouse, WebPageTest, DevTools deep dive |
 | **Day 10** | JS Performance | Code splitting, tree shaking, bundle optimization |
 
----
-
-*Frontend System Design Series | Sajal Shrivastav | 2026*

@@ -1,4 +1,4 @@
-# 📋 Frontend System Design — Day 15
+# Frontend System Design — Day 15
 ## Topic: List Virtualization
 
 > **Study time:** 1 hour | **Phase:** 3 of 5 | **Difficulty:** Intermediate
@@ -584,7 +584,3 @@ COMMON PITFALL:
 | **Day 16** | State Management Patterns | Context, Redux, NgRx, Signals — architecture decisions |
 | **Day 17** | Component Design Patterns | Compound components, render props, HOCs |
 | **Day 18** | Micro Frontends | Module Federation, independent deployments |
-
----
-
-*Frontend System Design Series | Sajal Shrivastav | 2026*

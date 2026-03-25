@@ -553,6 +553,3 @@ CDN NUMBERS:
 | **Day 7** | Security Fundamentals | XSS, CSRF, CSP headers — asked at every company |
 | **Day 8** | Phase 1 Review | 5 timed system design questions across all topics |
 
----
-
-*Frontend System Design Series | Sajal Shrivastav | 2026*

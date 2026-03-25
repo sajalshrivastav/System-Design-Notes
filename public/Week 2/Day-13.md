@@ -1,4 +1,4 @@
-# 🌐 Frontend System Design — Day 13
+# Frontend System Design — Day 13
 ## Topic: Network Optimization
 
 > **Study time:** 1 hour | **Phase:** 2 of 5 | **Difficulty:** Intermediate
@@ -617,7 +617,3 @@ Phase 2 (Days 9-13) covered the full performance toolkit:
 | **Day 14** | Virtual DOM & Change Detection | React diffing, Angular OnPush — Phase 3 begins |
 | **Day 15** | List Virtualization | Render 10,000 items at 60fps |
 | **Day 16** | Phase 2 Review | End-to-end performance optimization exercise |
-
----
-
-*Frontend System Design Series | Sajal Shrivastav | 2026*

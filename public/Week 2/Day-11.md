@@ -1,4 +1,4 @@
-# 🎨 Frontend System Design — Day 11
+# Frontend System Design — Day 11
 ## Topic: CSS Performance
 
 > **Study time:** 1 hour | **Phase:** 2 of 5 | **Difficulty:** Intermediate
@@ -661,7 +661,3 @@ ANIMATIONS:
 | **Day 12** | Image & Asset Optimization | WebP, AVIF, srcset, responsive images |
 | **Day 13** | Network Optimization | Prefetch, preconnect, HTTP/2, compression |
 | **Day 14** | Virtual DOM & Change Detection | React diffing, Angular change detection deep dive |
-
----
-
-*Frontend System Design Series | Sajal Shrivastav | 2026*

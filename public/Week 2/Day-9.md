@@ -416,6 +416,3 @@ KEY NUMBERS:
 | **Day 11** | CSS Performance | Critical CSS, render-blocking, animation containment |
 | **Day 12** | Image & Asset Optimization | WebP, AVIF, srcset, lazy loading |
 
----
-
-*Frontend System Design Series | Sajal Shrivastav | 2026*

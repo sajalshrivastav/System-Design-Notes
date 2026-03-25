@@ -538,6 +538,3 @@ setTimeout(() => console.log("timeout"), 0);
 | **Day 5** | HTTP Caching | Cache-Control, ETags, CDN strategy |
 | **Day 6** | Network Deep Dive | REST vs GraphQL, WebSockets, SSE |
 
----
-
-*Frontend System Design Series | Sajal Shrivastav | 2026*

@@ -129,6 +129,14 @@
           "stars": 4,
           "difficulty": "Intermediate",
           "time": "1 hr"
+        },
+        {
+          "day": 16,
+          "title": "State Management Patterns",
+          "file": "Week 2/Day-16.md",
+          "stars": 5,
+          "difficulty": "Intermediate → Advanced",
+          "time": "1 hr"
         }
       ]
     },
@@ -137,11 +145,35 @@
       "label": "Phase 3",
       "days": [
         {
-          "day": 943,
-          "title": "Coming Soon",
-          "file": "Week 3/Test.md",
+          "day": 17,
+          "title": "Component Design Patterns",
+          "file": "Week 3/Day-17.md",
           "stars": 5,
-          "difficulty": "Beginner",
+          "difficulty": "Intermediate → Advanced",
+          "time": "1 hr"
+        },
+        {
+          "day": 18,
+          "title": "Micro Frontends",
+          "file": "Week 3/Day-18.md",
+          "stars": 4,
+          "difficulty": "Advanced",
+          "time": "1 hr"
+        },
+        {
+          "day": 19,
+          "title": "Rendering Patterns (CSR, SSR, SSG, ISR)",
+          "file": "Week 3/Day-19.md",
+          "stars": 5,
+          "difficulty": "Intermediate → Advanced",
+          "time": "1 hr"
+        },
+        {
+          "day": 20,
+          "title": "Design Systems",
+          "file": "Week 3/Day-20.md",
+          "stars": 4,
+          "difficulty": "Intermediate → Advanced",
           "time": "1 hr"
         }
       ]

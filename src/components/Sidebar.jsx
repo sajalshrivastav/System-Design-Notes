@@ -1,4 +1,14 @@
 import { useState } from 'react';
+import { 
+  LayoutDashboard, 
+  BookOpen, 
+  Layers, 
+  ChevronDown, 
+  ChevronRight,
+  CheckCircle2,
+  Trophy,
+  Search
+} from 'lucide-react';
 
 export default function Sidebar({ weeks, activeWeekNum, activeDayNum, onWeekChange, onDayChange, isOpen }) {
   const [expandedWeeks, setExpandedWeeks] = useState(new Set([activeWeekNum]));
@@ -13,66 +23,80 @@ export default function Sidebar({ weeks, activeWeekNum, activeDayNum, onWeekChan
     setExpandedWeeks(next);
   };
 
+  const totalDays = weeks.flatMap(w => w.days).length;
+  const completedPercentage = 0; // Placeholder for now
+
   return (
-    <aside className={`profile-card ${!isOpen ? 'collapsed' : ''}`}>
-      <div className="sidebar-header">
-        <div className="profile-img-wrap-small">
-          <div className="profile-img-placeholder-small">SD</div>
+    <aside className={`profile-card modern-sidebar ${!isOpen ? 'collapsed' : ''}`}>
+      <div className="sidebar-brand">
+        <div className="brand-logo">
+          <BookOpen color="white" size={20} />
         </div>
-        <div className="profile-info-small">
-          <h3 className="profile-name-small">System Design</h3>
+        <div className="brand-text">
+          <h3 className="brand-name">Interview Prep</h3>
+          <span className="brand-tagline">Mastering Frontend</span>
         </div>
       </div>
 
-      <div className="sidebar-stats">
-        <div className="stat-mini">
-          <span className="val">+{weeks.flatMap(w => w.days).length}</span>
-          <span className="lbl">Total</span>
+      <div className="sidebar-search-container">
+        <div className="search-box">
+          <Search size={14} className="search-icon" />
+          <input type="text" placeholder="Search topics..." className="search-input" />
         </div>
-        <div className="stat-mini">
-          <span className="val">W{activeWeekNum}</span>
-          <span className="lbl">Active</span>
+      </div>
+
+      <div className="sidebar-progress-card">
+        <div className="progress-header">
+          <Trophy size={14} />
+          <span>Curriculum Progress</span>
+        </div>
+        <div className="progress-bar-bg">
+          <div className="progress-bar-fill" style={{ width: `${completedPercentage}%` }}></div>
+        </div>
+        <div className="progress-footer">
+          <span>0 / {totalDays} completed</span>
         </div>
       </div>
 
       <div className="week-nav">
+        <div className="nav-section-label">General</div>
         <button 
-          className={`curriculum-btn ${activeDayNum === -1 ? 'active' : ''}`}
+          className={`curriculum-btn-modern ${activeDayNum === -1 ? 'active' : ''}`}
           onClick={() => onDayChange(-1)}
         >
-          <span className="icon">🗺️</span>
-          <span className="lbl">Master Curriculum</span>
+          <LayoutDashboard size={18} />
+          <span className="lbl">Dashboard Overview</span>
         </button>
 
-        <div className="section-divider">
-          <span>CURRICULUM</span>
-        </div>
-
+        <div className="nav-section-label">Course Content</div>
+        
         {weeks.map(w => (
-          <div key={w.week} className="accordion-item">
+          <div key={w.week} className="modern-accordion">
             <button 
-              className={`accordion-header ${expandedWeeks.has(w.week) ? 'expanded' : ''}`}
+              className={`modern-accordion-header ${expandedWeeks.has(w.week) ? 'expanded' : ''} ${activeWeekNum === w.week ? 'active-week' : ''}`}
               onClick={() => toggleWeek(w.week)}
             >
-              <span>Week {w.week}: {w.label}</span>
-              <span className="icon">{expandedWeeks.has(w.week) ? '−' : '+'}</span>
+              <div className="header-left">
+                <Layers size={16} />
+                <span>Week {w.week}</span>
+              </div>
+              {expandedWeeks.has(w.week) ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
             </button>
             
             {expandedWeeks.has(w.week) && (
-              <div className="accordion-content">
+              <div className="modern-accordion-content">
                 {w.days.map(day => (
                   <button
                     key={day.day}
-                    className={`day-btn ${activeDayNum === day.day ? 'active' : ''}`}
+                    className={`modern-day-link ${activeDayNum === day.day ? 'active' : ''}`}
                     onClick={() => {
                         onWeekChange(w.week);
                         onDayChange(day.day);
                     }}
                   >
-                    <div className="day-row">
-                      <span className="day-pill">{day.day}</span>
-                      <span className="day-title-v">{day.title}</span>
-                    </div>
+                    <div className="link-dot"></div>
+                    <span className="link-title">{day.title}</span>
+                    {activeDayNum === day.day && <CheckCircle2 size={12} className="active-tick" />}
                   </button>
                 ))}
               </div>

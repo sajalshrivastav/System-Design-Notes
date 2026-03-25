@@ -599,6 +599,3 @@ KEY NUMBERS:
 | **Day 7** | Security Fundamentals | XSS, CSRF, CSP headers |
 | **Day 8** | Phase 1 Review | 5 timed questions across all topics |
 
----
-
-*Frontend System Design Series | Sajal Shrivastav | 2026*

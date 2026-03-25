@@ -1,4 +1,4 @@
-# ⚛️ Frontend System Design — Day 14
+# Frontend System Design — Day 14
 ## Topic: Virtual DOM & Change Detection
 
 > **Study time:** 1 hour | **Phase:** 3 of 5 | **Difficulty:** Intermediate → Advanced
@@ -617,7 +617,3 @@ KEY NUMBERS:
 | **Day 15** | List Virtualization | Render 10,000 items at 60fps — virtual scroll deep dive |
 | **Day 16** | State Management Patterns | Context, Redux, NgRx, Signals — when to use which |
 | **Day 17** | Component Design Patterns | Compound components, render props, HOCs |
-
----
-
-*Frontend System Design Series | Sajal Shrivastav | 2026*

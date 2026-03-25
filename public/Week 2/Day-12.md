@@ -614,6 +614,3 @@ BLUR-UP PLACEHOLDER:
 | **Day 15** | List Virtualization | Virtual scroll for 10,000-item lists |
 | **Day 16** | Phase 2 Review | End-to-end performance optimization exercise |
 
----
-
-*Frontend System Design Series | Sajal Shrivastav | 2026*

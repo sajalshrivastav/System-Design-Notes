@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { marked } from 'marked';
 import hljs from 'highlight.js';
 import 'highlight.js/styles/monokai-sublime.css';
+import { Menu, X } from 'lucide-react';
 
 // Components
 import Sidebar from './components/Sidebar';
@@ -120,15 +121,19 @@ function App() {
   }
 
   return (
-    <div className={`layout ${!isSidebarOpen ? 'sidebar-closed' : ''} ${isSidebarOpen ? 'mobile-open' : ''}`}>
+    <div className={`layout 
+      ${!isSidebarOpen ? 'sidebar-closed' : ''} 
+      ${isSidebarOpen ? 'mobile-open' : ''}
+      ${activeDayNum === null ? 'on-landing' : ''}
+    `}>
       
-      {/* Sidebar Toggle Button */}
+      {/* Sidebar Toggle Button - Now with a consistent pill design */}
       <button 
-        className="sidebar-toggle" 
+        className={`sidebar-toggle ${activeDayNum === null ? 'landing-toggle' : ''}`} 
         onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-        title={isSidebarOpen ? "Collapse Sidebar" : "Expand Sidebar"}
+        title={isSidebarOpen ? "Collapse Sidebar" : "Explore Curriculum"}
       >
-        {isSidebarOpen ? '✕' : '☰'}
+        {isSidebarOpen ? <X size={18} /> : <><Menu size={18} /> Explore</>}
       </button>
 
       {/* Mobile Overlay */}
@@ -167,7 +172,7 @@ function App() {
         </div>
 
         {/* Bottom Navigation Navbar */}
-        {activeDayNum && (
+        {activeDayNum !== null && activeDayNum > 0 && (
           <BottomNav 
             prev={prevNote} 
             next={nextNote} 

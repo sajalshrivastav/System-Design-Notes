@@ -657,6 +657,3 @@ Then open your own project and find:
 | **Day 8** | Phase 1 Review | 5 timed questions — all Phase 1 topics |
 | **Day 9** | Performance Metrics & Tools | Lighthouse, WebPageTest, DevTools deep dive |
 
----
-
-*Frontend System Design Series | Sajal Shrivastav | 2026*

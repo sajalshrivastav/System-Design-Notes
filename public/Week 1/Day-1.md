@@ -440,6 +440,3 @@ Performance hints in HTML:
 | **Day 4** | Core Web Vitals & Performance Metrics | Measured in every frontend interview |
 | **Day 5** | HTTP Caching Deep Dive | Cache-Control, ETags, CDN strategy |
 
----
-
-*Frontend System Design Series | Sajal Shrivastav | 2026*
