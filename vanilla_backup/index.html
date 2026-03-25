@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Frontend System Design — Sajal Shrivastav</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github-dark.min.css" />
+</head>
+<body>
+
+  <!-- Floating Pill Navbar -->
+  <nav class="navbar">
+    <div class="nav-pills" id="nav-pills"></div>
+  </nav>
+
+  <aside class="profile-card">
+      <div class="profile-img-wrap">
+        <div class="profile-img-placeholder">
+          <span>SD</span>
+        </div>
+      </div>
+
+      <div class="profile-info">
+        <h2 class="profile-name">Sajal Shrivastav</h2>
+        <p class="profile-bio">Frontend System Design notes — from basics to interview-ready. Built for deep understanding.</p>
+      </div>
+
+      <div class="profile-stats">
+        <div class="stat">
+          <span class="stat-num">+3</span>
+          <span class="stat-label">Days Done</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-num">5</span>
+          <span class="stat-label">Weeks Planned</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-num">W1</span>
+          <span class="stat-label">Current Week</span>
+        </div>
+      </div>
+
+      <div class="week-nav">
+        <div class="week-label">Week 1 — Foundations</div>
+        <div class="day-list" id="day-list"></div>
+      </div>
+    </aside>
+
+    <!-- Right Scrollable Content -->
+    <main class="main-content">
+      <div id="content" class="content">
+        <div class="welcome-screen">
+          <div class="welcome-tag">Frontend System Design Series · 2026</div>
+          <h1 class="welcome-title">Master Frontend<br /><span class="orange">Architecture</span></h1>
+          <p class="welcome-desc">Structured notes covering how the web works, JavaScript internals, browser APIs, performance, and system design patterns — everything you need for senior frontend interviews.</p>
+          <div class="welcome-cta">← Pick a day from the sidebar</div>
+        </div>
+      </div>
+    </main>
+
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.0/marked.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
