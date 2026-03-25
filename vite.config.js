@@ -11,10 +11,15 @@ function autoCurriculumPlugin() {
       generateCurriculum();
     },
     handleHotUpdate({ file, server }) {
-      if (file.endsWith('.md') && file.includes('Week')) {
+      if (file.endsWith('.md') && file.includes('content')) {
         console.log(`\n📄 Markdown updated: ${file.split(/[\/\\]/).pop()}`);
         generateCurriculum();
-        // Option to trigger full reload if notes.json is only loaded once
+        server.ws.send({ type: 'full-reload' });
+      }
+      // Also regenerate when week.json or track.json changes
+      if ((file.endsWith('week.json') || file.endsWith('track.json'))) {
+        console.log(`\n⚙️  Config updated: ${file.split(/[\/\\]/).pop()}`);
+        generateCurriculum();
         server.ws.send({ type: 'full-reload' });
       }
     }

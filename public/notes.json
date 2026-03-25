@@ -1,182 +1,225 @@
 {
-  "weeks": [
-    {
-      "week": 1,
-      "label": "Foundations",
-      "days": [
-        {
-          "day": 1,
-          "title": "How the Web Works (URL → Pixels on Screen)",
-          "file": "Week 1/Day-1.md",
-          "stars": 5,
-          "difficulty": "Beginner",
-          "time": "1 hr"
-        },
-        {
-          "day": 2,
-          "title": "The JavaScript Event Loop",
-          "file": "Week 1/Day-2.md",
-          "stars": 5,
-          "difficulty": "Beginner → Intermediate",
-          "time": "1 hr"
-        },
-        {
-          "day": 3,
-          "title": "Browser Storage",
-          "file": "Week 1/Day-3.md",
-          "stars": 5,
-          "difficulty": "Beginner → Intermediate",
-          "time": "1 hr"
-        },
-        {
-          "day": 4,
-          "title": "Core Web Vitals",
-          "file": "Week 1/Day-4.md",
-          "stars": 5,
-          "difficulty": "Intermediate",
-          "time": "1 hr"
-        },
-        {
-          "day": 5,
-          "title": "HTTP Caching Deep Dive",
-          "file": "Week 1/Day-5.md",
-          "stars": 5,
-          "difficulty": "Intermediate",
-          "time": "1 hr"
-        },
-        {
-          "day": 6,
-          "title": "Browser Rendering Deep Dive",
-          "file": "Week 1/Day-6.md",
-          "stars": 5,
-          "difficulty": "Intermediate",
-          "time": "1 hr"
-        },
-        {
-          "day": 7,
-          "title": "Security Fundamentals",
-          "file": "Week 1/Day-7.md",
-          "stars": 5,
-          "difficulty": "Intermediate",
-          "time": "1 hr"
-        },
-        {
-          "day": 8,
-          "title": "Coming Soon",
-          "file": "Week 1/Day-8.md",
-          "stars": 5,
-          "difficulty": "Beginner",
-          "time": "1 hr"
-        }
-      ]
-    },
-    {
-      "week": 2,
-      "label": "Deep Dive",
-      "days": [
-        {
-          "day": 9,
-          "title": "Performance Metrics & Tools",
-          "file": "Week 2/Day-9.md",
-          "stars": 5,
-          "difficulty": "Intermediate",
-          "time": "1 hr"
-        },
-        {
-          "day": 10,
-          "title": "JavaScript Performance",
-          "file": "Week 2/Day-10.md",
-          "stars": 5,
-          "difficulty": "Intermediate",
-          "time": "1 hr"
-        },
-        {
-          "day": 11,
-          "title": "CSS Performance",
-          "file": "Week 2/Day-11.md",
-          "stars": 4,
-          "difficulty": "Intermediate",
-          "time": "1 hr"
-        },
-        {
-          "day": 12,
-          "title": "Image & Asset Optimization",
-          "file": "Week 2/Day-12.md",
-          "stars": 5,
-          "difficulty": "Beginner → Intermediate",
-          "time": "1 hr"
-        },
-        {
-          "day": 13,
-          "title": "Network Optimization",
-          "file": "Week 2/Day-13.md",
-          "stars": 4,
-          "difficulty": "Intermediate",
-          "time": "1 hr"
-        },
-        {
-          "day": 14,
-          "title": "Virtual DOM & Change Detection",
-          "file": "Week 2/Day-14.md",
-          "stars": 5,
-          "difficulty": "Intermediate → Advanced",
-          "time": "1 hr"
-        },
-        {
-          "day": 15,
-          "title": "List Virtualization",
-          "file": "Week 2/Day-15.md",
-          "stars": 4,
-          "difficulty": "Intermediate",
-          "time": "1 hr"
-        },
-        {
-          "day": 16,
-          "title": "State Management Patterns",
-          "file": "Week 2/Day-16.md",
-          "stars": 5,
-          "difficulty": "Intermediate → Advanced",
-          "time": "1 hr"
-        }
-      ]
-    },
-    {
-      "week": 3,
-      "label": "Phase 3",
-      "days": [
-        {
-          "day": 17,
-          "title": "Component Design Patterns",
-          "file": "Week 3/Day-17.md",
-          "stars": 5,
-          "difficulty": "Intermediate → Advanced",
-          "time": "1 hr"
-        },
-        {
-          "day": 18,
-          "title": "Micro Frontends",
-          "file": "Week 3/Day-18.md",
-          "stars": 4,
-          "difficulty": "Advanced",
-          "time": "1 hr"
-        },
-        {
-          "day": 19,
-          "title": "Rendering Patterns (CSR, SSR, SSG, ISR)",
-          "file": "Week 3/Day-19.md",
-          "stars": 5,
-          "difficulty": "Intermediate → Advanced",
-          "time": "1 hr"
-        },
-        {
-          "day": 20,
-          "title": "Design Systems",
-          "file": "Week 3/Day-20.md",
-          "stars": 4,
-          "difficulty": "Intermediate → Advanced",
-          "time": "1 hr"
-        }
-      ]
-    }
-  ]
+  "angular": {
+    "label": "Angular",
+    "available": false,
+    "weeks": []
+  },
+  "javascript": {
+    "label": "JavaScript",
+    "available": false,
+    "weeks": []
+  },
+  "react": {
+    "label": "React",
+    "available": false,
+    "weeks": []
+  },
+  "system-design": {
+    "label": "System Design",
+    "available": true,
+    "weeks": [
+      {
+        "week": 1,
+        "label": "Foundations",
+        "days": [
+          {
+            "day": 1,
+            "title": "How the Web Works (URL → Pixels on Screen)",
+            "file": "content/system-design/Week 1/Day-1.md",
+            "stars": 5,
+            "difficulty": "Beginner",
+            "time": "1 hr"
+          },
+          {
+            "day": 2,
+            "title": "The JavaScript Event Loop",
+            "file": "content/system-design/Week 1/Day-2.md",
+            "stars": 5,
+            "difficulty": "Beginner → Intermediate",
+            "time": "1 hr"
+          },
+          {
+            "day": 3,
+            "title": "Browser Storage",
+            "file": "content/system-design/Week 1/Day-3.md",
+            "stars": 5,
+            "difficulty": "Beginner → Intermediate",
+            "time": "1 hr"
+          },
+          {
+            "day": 4,
+            "title": "Core Web Vitals",
+            "file": "content/system-design/Week 1/Day-4.md",
+            "stars": 5,
+            "difficulty": "Intermediate",
+            "time": "1 hr"
+          },
+          {
+            "day": 5,
+            "title": "HTTP Caching Deep Dive",
+            "file": "content/system-design/Week 1/Day-5.md",
+            "stars": 5,
+            "difficulty": "Intermediate",
+            "time": "1 hr"
+          },
+          {
+            "day": 6,
+            "title": "Browser Rendering Deep Dive",
+            "file": "content/system-design/Week 1/Day-6.md",
+            "stars": 5,
+            "difficulty": "Intermediate",
+            "time": "1 hr"
+          },
+          {
+            "day": 7,
+            "title": "Security Fundamentals",
+            "file": "content/system-design/Week 1/Day-7.md",
+            "stars": 5,
+            "difficulty": "Intermediate",
+            "time": "1 hr"
+          },
+          {
+            "day": 8,
+            "title": "Coming Soon",
+            "file": "content/system-design/Week 1/Day-8.md",
+            "stars": 5,
+            "difficulty": "Beginner",
+            "time": "1 hr"
+          }
+        ]
+      },
+      {
+        "week": 2,
+        "label": "Deep Dive",
+        "days": [
+          {
+            "day": 9,
+            "title": "Performance Metrics & Tools",
+            "file": "content/system-design/Week 2/Day-9.md",
+            "stars": 5,
+            "difficulty": "Intermediate",
+            "time": "1 hr"
+          },
+          {
+            "day": 10,
+            "title": "JavaScript Performance",
+            "file": "content/system-design/Week 2/Day-10.md",
+            "stars": 5,
+            "difficulty": "Intermediate",
+            "time": "1 hr"
+          },
+          {
+            "day": 11,
+            "title": "CSS Performance",
+            "file": "content/system-design/Week 2/Day-11.md",
+            "stars": 4,
+            "difficulty": "Intermediate",
+            "time": "1 hr"
+          },
+          {
+            "day": 12,
+            "title": "Image & Asset Optimization",
+            "file": "content/system-design/Week 2/Day-12.md",
+            "stars": 5,
+            "difficulty": "Beginner → Intermediate",
+            "time": "1 hr"
+          },
+          {
+            "day": 13,
+            "title": "Network Optimization",
+            "file": "content/system-design/Week 2/Day-13.md",
+            "stars": 4,
+            "difficulty": "Intermediate",
+            "time": "1 hr"
+          },
+          {
+            "day": 14,
+            "title": "Virtual DOM & Change Detection",
+            "file": "content/system-design/Week 2/Day-14.md",
+            "stars": 5,
+            "difficulty": "Intermediate → Advanced",
+            "time": "1 hr"
+          },
+          {
+            "day": 15,
+            "title": "List Virtualization",
+            "file": "content/system-design/Week 2/Day-15.md",
+            "stars": 4,
+            "difficulty": "Intermediate",
+            "time": "1 hr"
+          },
+          {
+            "day": 16,
+            "title": "State Management Patterns",
+            "file": "content/system-design/Week 2/Day-16.md",
+            "stars": 5,
+            "difficulty": "Intermediate → Advanced",
+            "time": "1 hr"
+          }
+        ]
+      },
+      {
+        "week": 3,
+        "label": "Architecture Patterns",
+        "days": [
+          {
+            "day": 17,
+            "title": "Component Design Patterns",
+            "file": "content/system-design/Week 3/Day-17.md",
+            "stars": 5,
+            "difficulty": "Intermediate → Advanced",
+            "time": "1 hr"
+          },
+          {
+            "day": 18,
+            "title": "Micro Frontends",
+            "file": "content/system-design/Week 3/Day-18.md",
+            "stars": 4,
+            "difficulty": "Advanced",
+            "time": "1 hr"
+          },
+          {
+            "day": 19,
+            "title": "Rendering Patterns (CSR, SSR, SSG, ISR)",
+            "file": "content/system-design/Week 3/Day-19.md",
+            "stars": 5,
+            "difficulty": "Intermediate → Advanced",
+            "time": "1 hr"
+          },
+          {
+            "day": 20,
+            "title": "Design Systems",
+            "file": "content/system-design/Week 3/Day-20.md",
+            "stars": 4,
+            "difficulty": "Intermediate → Advanced",
+            "time": "1 hr"
+          },
+          {
+            "day": 21,
+            "title": "🎯   Phase 3 Review Questions & Model Answers",
+            "file": "content/system-design/Week 3/Day-21.md",
+            "stars": 5,
+            "difficulty": "Beginner",
+            "time": "1 hr"
+          },
+          {
+            "day": 22,
+            "title": "Accessibility (a11y)",
+            "file": "content/system-design/Week 3/Day-22.md",
+            "stars": 4,
+            "difficulty": "Intermediate",
+            "time": "1 hr"
+          },
+          {
+            "day": 23,
+            "title": "Internationalization (i18n)",
+            "file": "content/system-design/Week 3/Day-23.md",
+            "stars": 3,
+            "difficulty": "Intermediate",
+            "time": "1 hr"
+          }
+        ]
+      }
+    ]
+  }
 }

@@ -1,4 +1,4 @@
-# 🌐 Frontend System Design — Day 1
+# Frontend System Design — Day 1
 ## Topic: How the Web Works (URL → Pixels on Screen)
 
 > **Study time:** 1 hour | **Phase:** 1 of 5 | **Difficulty:** Beginner  
