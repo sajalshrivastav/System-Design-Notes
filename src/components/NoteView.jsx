@@ -1,19 +1,15 @@
-import { useRef } from 'react';
+import { useRef, useMemo, useState, useEffect } from 'react';
 import useScrolled from '../hooks/useScrolled';
 import FloatingCards from './landing/FloatingCards';
 import HeroSection from './landing/HeroSection';
 import CurriculumRoadmap from './curriculum/CurriculumRoadmap';
 import ComingSoon from './note/ComingSoon';
 import NoteHeader from './note/NoteHeader';
+import LessonLayout from './note/LessonLayout';
+import { TRACKS } from '../data/tracks';
 
 /**
  * NoteView — top-level view switcher.
- *
- * Renders one of four states:
- *   1. Landing / Dashboard  (note === null)
- *   2. Loading spinner
- *   3. Coming Soon          (noteContent === 'COMING_SOON')
- *   4. Note content         (markdown rendered)
  */
 export default function NoteView({
   note,
@@ -23,12 +19,59 @@ export default function NoteView({
   activeTrack,
   setActiveTrack,
   onNavigate,
+  prevNote,
+  nextNote,
+  activeDayNum,
 }) {
   const curriculumRef = useRef(null);
   const isScrolled    = useScrolled(40);
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   const scrollToCurriculum = () =>
     curriculumRef.current?.scrollIntoView({ behavior: 'smooth' });
+
+  // ── Scroll Tracking ──────────────────────────────────────────────────
+  useEffect(() => {
+    if (!noteContent || noteContent === 'COMING_SOON') return;
+
+    const handleScroll = () => {
+      const winScroll = document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+      setScrollProgress(Math.min(scrolled, 100));
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [noteContent]);
+
+  // ── Extract TOC ────────────────────────────────────────────────────────
+  const toc = useMemo(() => {
+    if (!noteContent || noteContent === 'COMING_SOON') return [];
+    
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(noteContent, 'text/html');
+    const headings = doc.querySelectorAll('h2, h3');
+    
+    return Array.from(headings).map((h, i) => {
+      const id = h.id || `heading-${i}`;
+      return {
+        id,
+        text: h.innerText,
+        level: h.tagName.toLowerCase()
+      };
+    });
+  }, [noteContent]);
+
+  // ── Reading Time Estimation ──────────────────────────────────────────
+  const readingTime = useMemo(() => {
+    if (!noteContent) return 0;
+    const wordsPerMinute = 200;
+    // Strip HTML tags to count words
+    const text = noteContent.replace(/<[^>]*>/g, ' ');
+    const words = text.split(/\s+/).length;
+    return Math.max(1, Math.ceil(words / wordsPerMinute));
+  }, [noteContent]);
 
   // ── Coming Soon ──────────────────────────────────────────────────────────
   if (noteContent === 'COMING_SOON') {
@@ -40,8 +83,54 @@ export default function NoteView({
     );
   }
 
-  // ── Landing / Dashboard ──────────────────────────────────────────────────
-  if (!note && !loading) {
+  // ── Dashboard View ──────────────────────────────────────────────────────
+  if (activeDayNum === -1) {
+    return (
+      <div className="dashboard-container">
+        <div className="dashboard-header-modern">
+          <div className="dh-left">
+            <h1 className="dh-title">My Learning Dashboard</h1>
+            <p className="dh-subtitle">Track your progress across all engineering tracks.</p>
+          </div>
+          <div className="dh-actions">
+            <div className="dh-stat-pill">
+              <span className="dh-stat-val">0/24</span>
+              <span className="dh-stat-lbl">Lessons</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Track Selection Tabs */}
+        <div className="track-tabs-row">
+          {TRACKS.map((track) => (
+            <button
+              key={track.id}
+              className={`track-tab-pill ${activeTrack === track.id ? 'active' : ''}`}
+              onClick={() => setActiveTrack(track.id)}
+              style={{ 
+                '--track-active-bg': track.color + '22',
+                '--track-active-border': track.color + '44' 
+              }}
+            >
+              <span className="tab-indicator" style={{ background: track.color }} />
+              {track.label}
+              {!track.available && <span className="tab-soon">Soon</span>}
+            </button>
+          ))}
+        </div>
+
+        <CurriculumRoadmap
+          weeks={weeks}
+          activeTrack={activeTrack}
+          setActiveTrack={setActiveTrack}
+          onNavigate={onNavigate}
+        />
+      </div>
+    );
+  }
+
+  // ── Landing Page (Default Home) ──────────────────────────────────────────
+  if (activeDayNum === null && !loading) {
     return (
       <div className="welcome-screen custom-home landing-page">
         <div className="abstract-glow main-glow" />
@@ -52,24 +141,11 @@ export default function NoteView({
         <HeroSection
           activeTrack={activeTrack}
           setActiveTrack={setActiveTrack}
-          onScrollToCurriculum={scrollToCurriculum}
+          onScrollToCurriculum={() => onNavigate(-1, -1)} 
         />
 
-        <section ref={curriculumRef} className="curriculum-overview">
-          <div className="section-header">
-            <h2 className="section-title-large">Curriculum Roadmap</h2>
-            <p className="section-subtitle-large">
-              Click a week on the journey to explore its lessons.
-            </p>
-          </div>
-
-          <CurriculumRoadmap
-            weeks={weeks}
-            activeTrack={activeTrack}
-            setActiveTrack={setActiveTrack}
-            onNavigate={onNavigate}
-          />
-        </section>
+        {/* Removed Roadmap from landing - now on Dashboard */}
+        <div className="landing-footer-blur" />
       </div>
     );
   }
@@ -86,17 +162,26 @@ export default function NoteView({
 
   // ── Note Content ─────────────────────────────────────────────────────────
   return (
-    <div className="note-page">
+    <div className="note-structured-container">
       <NoteHeader
         note={note}
         isScrolled={isScrolled}
         onBack={() => onNavigate(-1, -1)}
+        readingTime={readingTime}
+        progress={scrollProgress}
       />
-      <hr className="header-divider" />
-      <div
-        className="markdown-body"
-        dangerouslySetInnerHTML={{ __html: noteContent }}
-      />
+      
+      <LessonLayout 
+        toc={toc} 
+        prevNote={prevNote} 
+        nextNote={nextNote}
+        onNavigate={(n) => onNavigate(n.weekNum, n.day)}
+      >
+        <div
+          className="markdown-body"
+          dangerouslySetInnerHTML={{ __html: noteContent }}
+        />
+      </LessonLayout>
     </div>
   );
 }

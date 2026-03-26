@@ -7,7 +7,19 @@ import { Menu, X } from 'lucide-react';
 import Sidebar from './components/Sidebar';
 import NoteView from './components/NoteView';
 import BottomNav from './components/BottomNav';
+import QuickNavigator from './components/QuickNavigator';
 import useNotes from './hooks/useNotes';
+
+// Custom renderer to add IDs to headings for TOC
+const renderer = new marked.Renderer();
+renderer.heading = (text, level) => {
+  const textVal = typeof text === 'object' ? text.text : text;
+  const id = textVal.toLowerCase().replace(/[^\w]+/g, '-');
+  if (level === 2 || level === 3) {
+    return `<h${level} id="${id}">${textVal}</h${level}>`;
+  }
+  return `<h${level}>${textVal}</h${level}>`;
+};
 
 // Parse markdown — strip H1 title + first HR (metadata block)
 function parseMarkdown(md) {
@@ -19,7 +31,7 @@ function parseMarkdown(md) {
     if (!passedH1 && l.startsWith('# ')) { passedH1 = true; bodyStart = i + 1; continue; }
     if (passedH1 && !passedHr && l === '---') { passedHr = true; bodyStart = i + 1; break; }
   }
-  return marked.parse(lines.slice(bodyStart).join('\n'));
+  return marked.parse(lines.slice(bodyStart).join('\n'), { renderer });
 }
 
 export default function App() {
@@ -28,7 +40,7 @@ export default function App() {
   const [activeDayNum, setActiveDayNum] = useState(null);
   const [noteContent, setNoteContent]   = useState(null);
   const [loading, setLoading]           = useState(false);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const { getWeeks, getAllNotes, loading: notesLoading } = useNotes();
 
@@ -52,7 +64,12 @@ export default function App() {
 
   // Reset when track changes
   useEffect(() => {
-    setActiveDayNum(null);
+    // Only reset view to Home if we are currently on a lesson.
+    // If we are on the Dashboard (-1), we stay there.
+    if (activeDayNum !== -1) {
+      setActiveDayNum(null);
+    }
+    
     setNoteContent(null);
     setActiveWeekNum(1);
     lastFetchedFile.current = null;
@@ -143,8 +160,23 @@ export default function App() {
         onClick={() => setIsSidebarOpen(o => !o)}
         title={isSidebarOpen ? 'Collapse Sidebar' : 'Explore Curriculum'}
       >
-        {isSidebarOpen ? <X size={18} /> : <><Menu size={18} /> Explore</>}
+        {isSidebarOpen ? <X size={18} /> : (
+          <>
+            <span className="toggle-icon"><Menu size={18} /></span>
+            <span className="toggle-text">Explore</span>
+          </>
+        )}
       </button>
+
+      {activeDayNum !== null && activeDayNum !== -1 && (
+        <QuickNavigator 
+          weeks={filteredWeeks}
+          activeWeekNum={activeWeekNum}
+          activeDayNum={activeDayNum}
+          onNavigate={(w, d) => { setActiveWeekNum(w); setActiveDayNum(d); }}
+          isOpen={isSidebarOpen}
+        />
+      )}
 
       {isSidebarOpen && (
         <div className="mobile-overlay" onClick={() => setIsSidebarOpen(false)} />
@@ -164,25 +196,18 @@ export default function App() {
       <main className="main-content">
         <div className="content">
           <NoteView
-            note={activeNote || (activeDayNum > 0 ? { day: activeDayNum, title: 'Upcoming Lesson' } : null)}
+            note={activeNote || (activeDayNum > 0 ? { day: activeDayNum, title: 'Upcoming Lesson', weekNum: activeWeekNum } : null)}
             noteContent={noteContent}
             loading={loading}
             weeks={filteredWeeks}
             activeTrack={activeTrack}
             setActiveTrack={setActiveTrack}
             onNavigate={(w, d) => { setActiveWeekNum(w); setActiveDayNum(d); }}
+            prevNote={prevNote}
+            nextNote={nextNote}
+            activeDayNum={activeDayNum}
           />
         </div>
-
-        {activeDayNum > 0 && (
-          <BottomNav
-            prev={prevNote}
-            next={nextNote}
-            onNavigate={navigateTo}
-            currentIndex={currentIndex}
-            total={allNotes.length}
-          />
-        )}
       </main>
     </div>
   );
