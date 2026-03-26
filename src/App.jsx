@@ -41,6 +41,19 @@ export default function App() {
   const [noteContent, setNoteContent]   = useState(null);
   const [loading, setLoading]           = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [completedByTrack, setCompletedByTrack] = useState(() => {
+    try {
+      const saved = localStorage.getItem('ff_completed_lessons');
+      return saved ? JSON.parse(saved) : {};
+    } catch {
+      return {};
+    }
+  });
+
+  // Persist progress
+  useEffect(() => {
+    localStorage.setItem('ff_completed_lessons', JSON.stringify(completedByTrack));
+  }, [completedByTrack]);
 
   const { getWeeks, getAllNotes, loading: notesLoading } = useNotes();
 
@@ -114,6 +127,22 @@ export default function App() {
     // Cleanup: if day changes before fetch completes, ignore stale result
     return () => { cancelled = true; };
   }, [activeDayNum, activeNote?.file]); // ← file path, not the whole allNotes array
+
+  // Automatically mark as complete when viewed
+  useEffect(() => {
+    if (activeDayNum > 0 && noteContent && noteContent !== 'COMING_SOON' && !loading) {
+      setCompletedByTrack(prev => {
+        const trackCompleted = prev[activeTrack] || [];
+        if (!trackCompleted.includes(activeDayNum)) {
+          return {
+            ...prev,
+            [activeTrack]: [...trackCompleted, activeDayNum]
+          };
+        }
+        return prev;
+      });
+    }
+  }, [activeDayNum, activeTrack, noteContent, loading]);
 
   // Highlight only the newly rendered note — scoped to .markdown-body
   useEffect(() => {
@@ -206,6 +235,9 @@ export default function App() {
             prevNote={prevNote}
             nextNote={nextNote}
             activeDayNum={activeDayNum}
+            completedCount={completedByTrack[activeTrack]?.length || 0}
+            completedLessons={completedByTrack[activeTrack] || []}
+            totalLessons={allNotes.length}
           />
         </div>
       </main>

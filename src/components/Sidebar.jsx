@@ -1,9 +1,7 @@
 import React from 'react';
 import { 
   Home, 
-  Compass, 
-  LayoutDashboard,
-  ChevronsUpDown
+  Compass
 } from 'lucide-react';
 
 export default function Sidebar({
@@ -13,8 +11,7 @@ export default function Sidebar({
 }) {
   const navItems = [
     { id: 'home', label: 'Home', icon: Home, active: activeDayNum === null },
-    { id: 'tracks', label: 'Explore Tracks', icon: Compass, active: false },
-    { id: 'dashboard', label: 'My Dashboard', icon: LayoutDashboard, active: activeDayNum === -1 },
+    { id: 'dashboard', label: 'Explore Tracks', icon: Compass, active: activeDayNum === -1 },
   ];
 
   return (

@@ -13,7 +13,7 @@ import { TRACKS } from '../../data/tracks';
  * The right column height is measured via ResizeObserver so the
  * vertical journey SVG always fills the full container height.
  */
-export default function CurriculumRoadmap({ weeks, activeTrack, setActiveTrack, onNavigate }) {
+export default function CurriculumRoadmap({ weeks, activeTrack, setActiveTrack, onNavigate, completedLessons }) {
   const rightColRef = useRef(null);
   const [selectedWeek, setSelectedWeek] = useState(() => weeks[0]?.week ?? null);
   const [rightHeight, setRightHeight]   = useState(400);
@@ -64,7 +64,11 @@ export default function CurriculumRoadmap({ weeks, activeTrack, setActiveTrack, 
           />
         </div>
         <div className="journey-bottom">
-          <LessonTable week={selectedWeekData} onNavigate={onNavigate} />
+          <LessonTable 
+            week={selectedWeekData} 
+            onNavigate={onNavigate} 
+            completedLessons={completedLessons}
+          />
         </div>
       </div>
     );
@@ -81,7 +85,11 @@ export default function CurriculumRoadmap({ weeks, activeTrack, setActiveTrack, 
         />
       </div>
       <div className="journey-right" ref={rightColRef}>
-        <LessonTable week={selectedWeekData} onNavigate={onNavigate} />
+        <LessonTable 
+          week={selectedWeekData} 
+          onNavigate={onNavigate} 
+          completedLessons={completedLessons}
+        />
       </div>
     </div>
   );

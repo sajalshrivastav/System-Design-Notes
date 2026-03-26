@@ -31,6 +31,15 @@ export const TRACKS = [
     available: false,
   },
   {
+    id: 'js-patterns',
+    label: 'JS Patterns',
+    icon: 'Terminal',
+    color: '#10b981',
+    glow: 'rgba(16, 185, 129, 0.18)',
+    description: 'Singleton, Proxy, Observer & common JS design patterns',
+    available: true,
+  },
+  {
     id: 'angular',
     label: 'Angular',
     icon: 'Hexagon',

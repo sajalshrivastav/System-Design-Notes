@@ -1,10 +1,10 @@
-import { Clock, ChevronRight } from 'lucide-react';
+import { ChevronRight, CheckCircle } from 'lucide-react';
 
 /**
  * Table of lessons for a selected week.
  * Each row is clickable and navigates to that day's note.
  */
-export default function LessonTable({ week, onNavigate }) {
+export default function LessonTable({ week, onNavigate, completedLessons = [] }) {
   if (!week) return null;
 
   return (
@@ -21,36 +21,33 @@ export default function LessonTable({ week, onNavigate }) {
             <tr>
               <th>Day</th>
               <th>Topic</th>
-              <th>Difficulty</th>
-              <th>Time</th>
               <th></th>
             </tr>
           </thead>
           <tbody>
-            {week.days.map(day => (
-              <tr
-                key={day.day}
-                className="lt-row"
-                onClick={() => onNavigate(week.week, day.day)}
-              >
-                <td className="lt-day">
-                  Day {String(day.day).padStart(2, '0')}
-                </td>
-                <td className="lt-topic">{day.title}</td>
-                <td className="lt-diff">
-                  <span className={`diff-pill ${day.difficulty?.toLowerCase().split(' ')[0]}`}>
-                    {day.difficulty}
-                  </span>
-                </td>
-                <td className="lt-time">
-                  <Clock size={11} />
-                  {day.time}
-                </td>
-                <td className="lt-cta">
-                  <ChevronRight size={14} className="lt-arrow" />
-                </td>
-              </tr>
-            ))}
+            {week.days.map(day => {
+              const isCompleted = completedLessons.includes(day.day);
+              return (
+                <tr
+                  key={day.day}
+                  className={`lt-row ${isCompleted ? 'completed-row' : ''}`}
+                  onClick={() => onNavigate(week.week, day.day)}
+                >
+                  <td className="lt-day">
+                    Day {String(day.day).padStart(2, '0')}
+                  </td>
+                  <td className="lt-topic">
+                    <div className="topic-name-wrap">
+                      {isCompleted && <CheckCircle size={14} className="topic-check" />}
+                      {day.title}
+                    </div>
+                  </td>
+                  <td className="lt-cta">
+                    <ChevronRight size={14} className="lt-arrow" />
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>

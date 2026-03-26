@@ -22,6 +22,9 @@ export default function NoteView({
   prevNote,
   nextNote,
   activeDayNum,
+  completedCount,
+  completedLessons,
+  totalLessons,
 }) {
   const curriculumRef = useRef(null);
   const isScrolled    = useScrolled(40);
@@ -89,12 +92,12 @@ export default function NoteView({
       <div className="dashboard-container">
         <div className="dashboard-header-modern">
           <div className="dh-left">
-            <h1 className="dh-title">My Learning Dashboard</h1>
-            <p className="dh-subtitle">Track your progress across all engineering tracks.</p>
+            <h1 className="dh-title">Explore Tracks</h1>
+            <p className="dh-subtitle">Dive into architectural learning and track your progress.</p>
           </div>
           <div className="dh-actions">
             <div className="dh-stat-pill">
-              <span className="dh-stat-val">0/24</span>
+              <span className="dh-stat-val">{completedCount}/{totalLessons}</span>
               <span className="dh-stat-lbl">Lessons</span>
             </div>
           </div>
@@ -124,6 +127,7 @@ export default function NoteView({
           activeTrack={activeTrack}
           setActiveTrack={setActiveTrack}
           onNavigate={onNavigate}
+          completedLessons={completedLessons}
         />
       </div>
     );
@@ -172,7 +176,6 @@ export default function NoteView({
       />
       
       <LessonLayout 
-        toc={toc} 
         prevNote={prevNote} 
         nextNote={nextNote}
         onNavigate={(n) => onNavigate(n.weekNum, n.day)}
