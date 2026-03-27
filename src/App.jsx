@@ -8,6 +8,7 @@ import Sidebar from './components/Sidebar';
 import NoteView from './components/NoteView';
 import BottomNav from './components/BottomNav';
 import QuickNavigator from './components/QuickNavigator';
+import CodingQuestionsPage from './components/questions/CodingQuestionsPage';
 import useNotes from './hooks/useNotes';
 
 // Custom renderer to add IDs to headings for TOC
@@ -19,6 +20,24 @@ renderer.heading = (text, level) => {
     return `<h${level} id="${id}">${textVal}</h${level}>`;
   }
   return `<h${level}>${textVal}</h${level}>`;
+};
+
+renderer.code = (codeArg, langArg) => {
+  const code = typeof codeArg === 'object' ? codeArg.text : codeArg;
+  const language = typeof codeArg === 'object' ? codeArg.lang : langArg;
+  
+  try {
+    const validLanguage = (language && hljs.getLanguage(language)) ? language : '';
+    if (validLanguage) {
+      const highlighted = hljs.highlight(code, { language: validLanguage }).value;
+      return `<pre><code class="hljs language-${validLanguage}">${highlighted}</code></pre>`;
+    } else {
+      const highlighted = hljs.highlightAuto(code).value;
+      return `<pre><code class="hljs">${highlighted}</code></pre>`;
+    }
+  } catch (err) {
+    return `<pre><code class="hljs">${code}</code></pre>`;
+  }
 };
 
 // Parse markdown — strip H1 title + first HR (metadata block)
@@ -41,6 +60,7 @@ export default function App() {
   const [noteContent, setNoteContent]   = useState(null);
   const [loading, setLoading]           = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [showQuestions, setShowQuestions] = useState(false);
   const [completedByTrack, setCompletedByTrack] = useState(() => {
     try {
       const saved = localStorage.getItem('ff_completed_lessons');
@@ -144,17 +164,7 @@ export default function App() {
     }
   }, [activeDayNum, activeTrack, noteContent, loading]);
 
-  // Highlight only the newly rendered note — scoped to .markdown-body
-  useEffect(() => {
-    if (!noteContent || noteContent === 'COMING_SOON') return;
-    // Small timeout lets React finish painting before hljs runs
-    const id = setTimeout(() => {
-      document.querySelectorAll('.markdown-body pre code').forEach(block => {
-        if (!block.dataset.highlighted) hljs.highlightElement(block);
-      });
-    }, 50);
-    return () => clearTimeout(id);
-  }, [noteContent]);
+
 
   const navigateTo = useCallback((note) => {
     if (!note) return;
@@ -181,11 +191,11 @@ export default function App() {
       'layout',
       !isSidebarOpen  ? 'sidebar-closed' : '',
       isSidebarOpen   ? 'mobile-open'    : '',
-      activeDayNum === null ? 'on-landing' : '',
+      activeDayNum === null && !showQuestions ? 'on-landing' : '',
     ].join(' ').trim()}>
 
       <button
-        className={`sidebar-toggle ${activeDayNum === null ? 'landing-toggle' : ''}`}
+        className={`sidebar-toggle ${activeDayNum === null && !showQuestions ? 'landing-toggle' : ''}`}
         onClick={() => setIsSidebarOpen(o => !o)}
         title={isSidebarOpen ? 'Collapse Sidebar' : 'Explore Curriculum'}
       >
@@ -224,21 +234,26 @@ export default function App() {
 
       <main className="main-content">
         <div className="content">
-          <NoteView
-            note={activeNote || (activeDayNum > 0 ? { day: activeDayNum, title: 'Upcoming Lesson', weekNum: activeWeekNum } : null)}
-            noteContent={noteContent}
-            loading={loading}
-            weeks={filteredWeeks}
-            activeTrack={activeTrack}
-            setActiveTrack={setActiveTrack}
-            onNavigate={(w, d) => { setActiveWeekNum(w); setActiveDayNum(d); }}
-            prevNote={prevNote}
-            nextNote={nextNote}
-            activeDayNum={activeDayNum}
-            completedCount={completedByTrack[activeTrack]?.length || 0}
-            completedLessons={completedByTrack[activeTrack] || []}
-            totalLessons={allNotes.length}
-          />
+          {showQuestions ? (
+            <CodingQuestionsPage onBack={() => setShowQuestions(false)} />
+          ) : (
+            <NoteView
+              note={activeNote || (activeDayNum > 0 ? { day: activeDayNum, title: 'Upcoming Lesson', weekNum: activeWeekNum } : null)}
+              noteContent={noteContent}
+              loading={loading}
+              weeks={filteredWeeks}
+              activeTrack={activeTrack}
+              setActiveTrack={setActiveTrack}
+              onNavigate={(w, d) => { setActiveWeekNum(w); setActiveDayNum(d); }}
+              prevNote={prevNote}
+              nextNote={nextNote}
+              activeDayNum={activeDayNum}
+              completedCount={completedByTrack[activeTrack]?.length || 0}
+              completedLessons={completedByTrack[activeTrack] || []}
+              totalLessons={allNotes.length}
+              onShowQuestions={() => setShowQuestions(true)}
+            />
+          )}
         </div>
       </main>
     </div>

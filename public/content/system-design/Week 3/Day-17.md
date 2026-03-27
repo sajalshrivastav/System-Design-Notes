@@ -13,13 +13,13 @@ complexity. These four patterns are tools for inverting control —
 letting consumers of your component decide *what* while your component
 handles *how*.
 
-```
-PATTERN           SOLVES                      REPLACED BY (modern React)
-─────────────────────────────────────────────────────────────────────────
-Compound components  Prop explosion, inflexible layout  Still best for this
-Render props         Logic + rendering separation        Custom hooks (mostly)
-Custom hooks         Logic reuse across components       Nothing — this IS modern
-Higher-Order Components  Cross-cutting behaviour        Custom hooks (mostly)
+```yaml
+# PATTERN                      SOLVES                                  REPLACED BY (modern React)
+# ───────────────────────────────────────────────────────────────────────────────────────────────
+Compound components:           Prop explosion, inflexible layout       # Still best for this
+Render props:                  Logic + rendering separation            # Custom hooks (mostly)
+Custom hooks:                  Logic reuse across components           # Nothing — this IS modern
+Higher-Order Components:       Cross-cutting behaviour                 # Custom hooks (mostly)
 ```
 
 ---
@@ -751,3 +751,4 @@ ANGULAR MAPPING:
 | **Day 18** | Micro Frontends | Module Federation, independent deployments |
 | **Day 19** | Rendering Patterns | SSR, SSG, CSR, ISR — when to use each |
 | **Day 20** | Design Systems | Component tokens, theming, a11y at scale |
+

@@ -4,7 +4,7 @@ import { ArrowRight, Code2, Cpu, Layout } from 'lucide-react';
 /**
  * Premium Split-Screen Hero Section
  */
-export default function HeroSection({ onScrollToCurriculum }) {
+export default function HeroSection({ onScrollToCurriculum, onShowQuestions }) {
   const [typedCode, setTypedCode] = useState('');
   const fullCode = `const App = () => {
   const [count, setCount] = useState(0);
@@ -86,7 +86,7 @@ export default function HeroSection({ onScrollToCurriculum }) {
           <button className="btn-primary-glow" onClick={onScrollToCurriculum}>
             Start Practicing <ArrowRight size={18} />
           </button>
-          <button className="btn-secondary-outline">
+          <button className="btn-secondary-outline" onClick={onShowQuestions}>
             Explore Questions
           </button>
         </div>

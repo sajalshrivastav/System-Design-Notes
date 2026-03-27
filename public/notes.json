@@ -19,7 +19,7 @@
         "days": [
           {
             "day": 1,
-            "title": "Creational Patterns — Singleton, Factory, Builder & Prototype",
+            "title": "JavaScript Design Patterns Day-1",
             "file": "content/js-patterns/Week 1/Day-1.md",
             "stars": 5,
             "difficulty": "Beginner",
@@ -27,7 +27,7 @@
           },
           {
             "day": 2,
-            "title": "Structural Patterns — Module, Facade, Decorator, Adapter & Proxy",
+            "title": "JavaScript Design Patterns Day-2",
             "file": "content/js-patterns/Week 1/Day-2.md",
             "stars": 5,
             "difficulty": "Beginner",
@@ -35,36 +35,36 @@
           },
           {
             "day": 3,
-            "title": "Behavioral Patterns — Observer, Strategy, Command & State",
+            "title": "JavaScript Design Patterns Day-3",
             "file": "content/js-patterns/Week 1/Day-3.md",
             "stars": 5,
-            "difficulty": "Intermediate",
+            "difficulty": "Beginner",
             "time": "1 hr"
           },
           {
             "day": 4,
-            "title": "Advanced Patterns — Chain of Responsibility, Mixin & Dependency Injection",
+            "title": "JavaScript Design Patterns Day-4",
             "file": "content/js-patterns/Week 1/Day-4.md",
             "stars": 5,
-            "difficulty": "Intermediate",
+            "difficulty": "Beginner",
             "time": "1 hr"
           }
         ]
       },
       {
         "week": 2,
-        "label": "React Design Patterns",
+        "label": "Week 2",
         "days": [
           {
             "day": 5,
-            "title": "React Patterns — HOC, Render Props, Hooks & Compound Components",
+            "title": "React Design Patterns  Complete Guide",
             "file": "content/js-patterns/Week 2/Day-5.md",
             "stars": 5,
-            "difficulty": "Intermediate",
+            "difficulty": "Beginner",
             "time": "1 hr"
           },
           {
-            "day": 506,
+            "day": 780,
             "title": "Coming Soon",
             "file": "content/js-patterns/Week 2/All-Day.md",
             "stars": 5,

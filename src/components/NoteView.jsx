@@ -25,6 +25,7 @@ export default function NoteView({
   completedCount,
   completedLessons,
   totalLessons,
+  onShowQuestions,
 }) {
   const curriculumRef = useRef(null);
   const isScrolled    = useScrolled(40);
@@ -145,7 +146,8 @@ export default function NoteView({
         <HeroSection
           activeTrack={activeTrack}
           setActiveTrack={setActiveTrack}
-          onScrollToCurriculum={() => onNavigate(-1, -1)} 
+          onScrollToCurriculum={() => onNavigate(-1, -1)}
+          onShowQuestions={onShowQuestions}
         />
 
         {/* Removed Roadmap from landing - now on Dashboard */}
