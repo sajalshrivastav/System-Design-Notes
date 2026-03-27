@@ -19,7 +19,7 @@
         "days": [
           {
             "day": 1,
-            "title": "JavaScript Design Patterns Day-1",
+            "title": "Creational Patterns — Singleton, Factory, Builder & Prototype",
             "file": "content/js-patterns/Week 1/Day-1.md",
             "stars": 5,
             "difficulty": "Beginner",
@@ -27,7 +27,7 @@
           },
           {
             "day": 2,
-            "title": "JavaScript Design Patterns Day-2",
+            "title": "Structural Patterns — Module, Facade, Decorator, Adapter & Proxy",
             "file": "content/js-patterns/Week 1/Day-2.md",
             "stars": 5,
             "difficulty": "Beginner",
@@ -35,32 +35,32 @@
           },
           {
             "day": 3,
-            "title": "JavaScript Design Patterns Day-3",
+            "title": "Behavioral Patterns — Observer, Strategy, Command & State",
             "file": "content/js-patterns/Week 1/Day-3.md",
             "stars": 5,
-            "difficulty": "Beginner",
+            "difficulty": "Intermediate",
             "time": "1 hr"
           },
           {
             "day": 4,
-            "title": "JavaScript Design Patterns Day-4",
+            "title": "Advanced Patterns — Chain of Responsibility, Mixin & Dependency Injection",
             "file": "content/js-patterns/Week 1/Day-4.md",
             "stars": 5,
-            "difficulty": "Beginner",
+            "difficulty": "Intermediate",
             "time": "1 hr"
           }
         ]
       },
       {
         "week": 2,
-        "label": "Week 2",
+        "label": "React Design Patterns",
         "days": [
           {
             "day": 5,
-            "title": "React Design Patterns  Complete Guide",
+            "title": "React Patterns — HOC, Render Props, Hooks & Compound Components",
             "file": "content/js-patterns/Week 2/Day-5.md",
             "stars": 5,
-            "difficulty": "Beginner",
+            "difficulty": "Intermediate",
             "time": "1 hr"
           },
           {
