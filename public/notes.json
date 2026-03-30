@@ -7,7 +7,22 @@
   "javascript": {
     "label": "JavaScript",
     "available": false,
-    "weeks": []
+    "weeks": [
+      {
+        "week": 1,
+        "label": "Week 1",
+        "days": [
+          {
+            "day": 1,
+            "title": "JavaScript Prototypes & Prototypal Inheritance",
+            "file": "content/javascript/Week 1/Day-1.md",
+            "stars": 5,
+            "difficulty": "Beginner",
+            "time": "1 hr"
+          }
+        ]
+      }
+    ]
   },
   "js-patterns": {
     "label": "JS Patterns",
@@ -64,7 +79,7 @@
             "time": "1 hr"
           },
           {
-            "day": 780,
+            "day": 473,
             "title": "Coming Soon",
             "file": "content/js-patterns/Week 2/All-Day.md",
             "stars": 5,

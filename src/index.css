@@ -3174,6 +3174,11 @@ body {
   margin: 0 auto;
   padding: 0 4%;
 }
+@media (min-width: 850px) {
+  .sidebar-closed .note-structured-container {
+    padding-left: clamp(4%, max(4%, 17rem), 20rem);
+  }
+}
 
 .note-structured-header {
   padding: 3rem 0;
