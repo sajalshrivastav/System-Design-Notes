@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { marked } from 'marked';
 import hljs from 'highlight.js';
 import 'highlight.js/styles/monokai-sublime.css';
@@ -6,7 +7,6 @@ import { Menu, X } from 'lucide-react';
 
 import Sidebar from './components/Sidebar';
 import NoteView from './components/NoteView';
-import BottomNav from './components/BottomNav';
 import QuickNavigator from './components/QuickNavigator';
 import CodingQuestionsPage from './components/questions/CodingQuestionsPage';
 import useNotes from './hooks/useNotes';
@@ -54,13 +54,36 @@ function parseMarkdown(md) {
 }
 
 export default function App() {
-  const [activeTrack, setActiveTrack]   = useState('system-design');
-  const [activeWeekNum, setActiveWeekNum] = useState(1);
-  const [activeDayNum, setActiveDayNum] = useState(null);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const path = location.pathname;
+  const parts = path.split('/').filter(Boolean);
+  
+  let activeTrack = 'system-design';
+  let activeWeekNum = 1;
+  let activeDayNum = null;
+  let showQuestions = false;
+
+  if (parts.length === 0) {
+    activeDayNum = null;
+  } else if (parts[0] === 'questions') {
+    showQuestions = true;
+  } else if (parts[0] === 'explore') {
+    activeDayNum = -1;
+    if (parts[1]) activeTrack = parts[1];
+  } else {
+    activeTrack = parts[0];
+    if (parts[1] === 'week' && parts[2]) activeWeekNum = parseInt(parts[2], 10);
+    if (parts[3] === 'day' && parts[4]) activeDayNum = parseInt(parts[4], 10);
+    if (!parts[1]) {
+      activeDayNum = null;
+    }
+  }
+
   const [noteContent, setNoteContent]   = useState(null);
   const [loading, setLoading]           = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [showQuestions, setShowQuestions] = useState(false);
   const [completedByTrack, setCompletedByTrack] = useState(() => {
     try {
       const saved = localStorage.getItem('ff_completed_lessons');
@@ -95,20 +118,7 @@ export default function App() {
   // Track the file path we last fetched so we never double-fetch
   const lastFetchedFile = useRef(null);
 
-  // Reset when track changes
-  useEffect(() => {
-    // Only reset view to Home if we are currently on a lesson.
-    // If we are on the Dashboard (-1), we stay there.
-    if (activeDayNum !== -1) {
-      setActiveDayNum(null);
-    }
-    
-    setNoteContent(null);
-    setActiveWeekNum(1);
-    lastFetchedFile.current = null;
-  }, [activeTrack]);
-
-  // Fetch note — only when activeDayNum or the resolved file path changes
+  // Fetch note
   useEffect(() => {
     if (!activeDayNum || activeDayNum <= 0) {
       setNoteContent('');
@@ -120,7 +130,6 @@ export default function App() {
       return;
     }
 
-    // Guard: don't re-fetch the same file (e.g. caused by allNotes reference change)
     if (lastFetchedFile.current === activeNote.file) return;
     lastFetchedFile.current = activeNote.file;
 
@@ -144,11 +153,10 @@ export default function App() {
         if (!cancelled) setLoading(false);
       });
 
-    // Cleanup: if day changes before fetch completes, ignore stale result
     return () => { cancelled = true; };
-  }, [activeDayNum, activeNote?.file]); // ← file path, not the whole allNotes array
+  }, [activeDayNum, activeNote?.file]);
 
-  // Automatically mark as complete when viewed
+  // Handle Mark Complete
   useEffect(() => {
     if (activeDayNum > 0 && noteContent && noteContent !== 'COMING_SOON' && !loading) {
       setCompletedByTrack(prev => {
@@ -163,19 +171,38 @@ export default function App() {
       });
     }
   }, [activeDayNum, activeTrack, noteContent, loading]);
+  
+  const handleSetTrack = useCallback((newTrack) => {
+    if (showQuestions) {
+      navigate(`/explore/${newTrack}`);
+    } else {
+      if (activeDayNum === null) navigate(`/${newTrack}`);
+      else if (activeDayNum === -1) navigate(`/explore/${newTrack}`);
+      else navigate(`/${newTrack}`); 
+    }
+    setIsSidebarOpen(false);
+  }, [navigate, showQuestions, activeDayNum]);
 
-
-
-  const navigateTo = useCallback((note) => {
-    if (!note) return;
-    setActiveWeekNum(note.weekNum);
-    setActiveDayNum(note.day);
-  }, []);
+  const handleNavigate = useCallback((w, d) => {
+    if (w === -1 && d === -1) {
+      navigate(`/explore/${activeTrack}`);
+    } else {
+      navigate(`/${activeTrack}/week/${w}/day/${d}`);
+    }
+    setIsSidebarOpen(false);
+  }, [navigate, activeTrack]);
 
   const handleDayChange = useCallback((day) => {
-    setActiveDayNum(day);
-    if (window.innerWidth <= 850) setIsSidebarOpen(false);
-  }, []);
+    if (day === null) navigate(`/${activeTrack}`);
+    else if (day === -1) navigate(`/explore/${activeTrack}`);
+    
+    setIsSidebarOpen(false);
+  }, [navigate, activeTrack]);
+
+  const handleShowQuestions = useCallback(() => {
+    navigate('/questions');
+    setIsSidebarOpen(false);
+  }, [navigate]);
 
   if (notesLoading) {
     return (
@@ -212,7 +239,7 @@ export default function App() {
           weeks={filteredWeeks}
           activeWeekNum={activeWeekNum}
           activeDayNum={activeDayNum}
-          onNavigate={(w, d) => { setActiveWeekNum(w); setActiveDayNum(d); }}
+          onNavigate={handleNavigate}
           isOpen={isSidebarOpen}
         />
       )}
@@ -224,10 +251,10 @@ export default function App() {
       <Sidebar
         weeks={filteredWeeks}
         activeTrack={activeTrack}
-        setActiveTrack={setActiveTrack}
+        setActiveTrack={handleSetTrack}
         activeWeekNum={activeWeekNum}
         activeDayNum={activeDayNum}
-        onWeekChange={setActiveWeekNum}
+        onWeekChange={() => {}}
         onDayChange={handleDayChange}
         isOpen={isSidebarOpen}
       />
@@ -235,7 +262,7 @@ export default function App() {
       <main className="main-content">
         <div className="content">
           {showQuestions ? (
-            <CodingQuestionsPage onBack={() => setShowQuestions(false)} />
+            <CodingQuestionsPage onBack={() => navigate(`/${activeTrack}`)} />
           ) : (
             <NoteView
               note={activeNote || (activeDayNum > 0 ? { day: activeDayNum, title: 'Upcoming Lesson', weekNum: activeWeekNum } : null)}
@@ -243,15 +270,15 @@ export default function App() {
               loading={loading}
               weeks={filteredWeeks}
               activeTrack={activeTrack}
-              setActiveTrack={setActiveTrack}
-              onNavigate={(w, d) => { setActiveWeekNum(w); setActiveDayNum(d); }}
+              setActiveTrack={handleSetTrack}
+              onNavigate={handleNavigate}
               prevNote={prevNote}
               nextNote={nextNote}
               activeDayNum={activeDayNum}
               completedCount={completedByTrack[activeTrack]?.length || 0}
               completedLessons={completedByTrack[activeTrack] || []}
               totalLessons={allNotes.length}
-              onShowQuestions={() => setShowQuestions(true)}
+              onShowQuestions={handleShowQuestions}
             />
           )}
         </div>
