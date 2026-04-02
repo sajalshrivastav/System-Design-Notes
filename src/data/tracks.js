@@ -10,7 +10,7 @@ export const TRACKS = [
     color: '#f59e0b',
     glow: 'rgba(245, 158, 11, 0.18)',
     description: 'Deep JS internals, closures, async patterns',
-    available: false,
+    available: true,
   },
   {
     id: 'js-patterns',
@@ -28,7 +28,7 @@ export const TRACKS = [
     color: '#38bdf8',
     glow: 'rgba(56, 189, 248, 0.18)',
     description: 'Hooks, patterns, performance, architecture',
-    available: false,
+    available: true,
   },
   {
     id: 'angular',
