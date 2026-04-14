@@ -72,7 +72,7 @@ export default function VerticalJourney({ weeks, activeWeekNum, onSelectWeek, co
             style={{ top: n.y - 14 }}
             onClick={() => onSelectWeek(n.week)}
           >
-            <span className="vj-wnum">Week {n.week}</span>
+            <span className="vj-wnum">Phase {n.week}</span>
             <span className="vj-wlabel">{n.label}</span>
           </button>
         ))}

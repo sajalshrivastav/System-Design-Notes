@@ -28,7 +28,7 @@ export default function NoteView({
   onShowQuestions,
 }) {
   const curriculumRef = useRef(null);
-  const isScrolled    = useScrolled(40);
+  const isScrolled = useScrolled(40);
   const [scrollProgress, setScrollProgress] = useState(0);
 
   const scrollToCurriculum = () =>
@@ -52,11 +52,11 @@ export default function NoteView({
   // ── Extract TOC ────────────────────────────────────────────────────────
   const toc = useMemo(() => {
     if (!noteContent || noteContent === 'COMING_SOON') return [];
-    
+
     const parser = new DOMParser();
     const doc = parser.parseFromString(noteContent, 'text/html');
     const headings = doc.querySelectorAll('h2, h3');
-    
+
     return Array.from(headings).map((h, i) => {
       const id = h.id || `heading-${i}`;
       return {
@@ -111,9 +111,9 @@ export default function NoteView({
               key={track.id}
               className={`track-tab-pill ${activeTrack === track.id ? 'active' : ''}`}
               onClick={() => setActiveTrack(track.id)}
-              style={{ 
+              style={{
                 '--track-active-bg': track.color + '22',
-                '--track-active-border': track.color + '44' 
+                '--track-active-border': track.color + '44'
               }}
             >
               <span className="tab-indicator" style={{ background: track.color }} />
@@ -176,9 +176,9 @@ export default function NoteView({
         readingTime={readingTime}
         progress={scrollProgress}
       />
-      
-      <LessonLayout 
-        prevNote={prevNote} 
+
+      <LessonLayout
+        prevNote={prevNote}
         nextNote={nextNote}
         onNavigate={(n) => onNavigate(n.weekNum, n.day)}
       >

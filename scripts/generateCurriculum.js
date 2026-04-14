@@ -2,15 +2,16 @@ import fs from 'fs';
 import path from 'path';
 
 // ── Parse metadata out of a markdown file ────────────────────────────────────
-function parseMd(filePath, weekDir, file) {
+function parseMd(filePath, phaseDir, file) {
   const content = fs.readFileSync(filePath, 'utf-8');
 
   // Day number — from filename first, then content
   let dayNum = null;
-  const fnMatch = file.match(/Day-?(\d+)/i);
+  // Match "Day-1" or just "1"
+  const fnMatch = file.match(/(?:Day-?)?(\d+)/i);
   if (fnMatch) dayNum = parseInt(fnMatch[1]);
   if (!dayNum) {
-    const hMatch = content.match(/Day\s+(\d+)/i);
+    const hMatch = content.match(/(?:Day|Phase)\s+(\d+)/i);
     if (hMatch) dayNum = parseInt(hMatch[1]);
   }
   if (!dayNum) dayNum = Math.floor(Math.random() * 900) + 100;
@@ -25,12 +26,12 @@ function parseMd(filePath, weekDir, file) {
     if (h1Match) {
       title = h1Match[1]
         .replace(/Frontend System Design/i, '')
-        .replace(/Day\s*\d+/i, '')
+        .replace(/(?:Day|Phase)\s*\d+/i, '')
         .replace(/[—:]/g, '')
         .trim();
     }
   }
-  if (!title) title = `Day ${dayNum} Notes`;
+  if (!title) title = `Phase ${dayNum} Notes`;
 
   // Study time
   let time = '1 hr';
@@ -77,31 +78,35 @@ export function generateCurriculum() {
       ? JSON.parse(fs.readFileSync(trackConfigPath, 'utf-8'))
       : { label: trackId, available: false };
 
-    // Each subfolder of the track is a Week
-    const weekDirs = fs.readdirSync(trackPath, { withFileTypes: true })
-      .filter(d => d.isDirectory() && /week/i.test(d.name))
+    // Each subfolder of the track is a Phase (formerly Week)
+    const phaseDirs = fs.readdirSync(trackPath, { withFileTypes: true })
+      .filter(d => d.isDirectory() && /(?:week|phase)/i.test(d.name))
       .sort((a, b) => {
         const na = parseInt(a.name.match(/\d+/)?.[0] || 0);
         const nb = parseInt(b.name.match(/\d+/)?.[0] || 0);
         return na - nb;
       });
 
-    const weeks = [];
+    const weeks = []; // We keep the key name "weeks" in JSON for compatibility or rename to "phases" if UI supports it.
+    // Looking at useNotes.js, it expects .weeks. Let's keep the key but update the labels.
 
-    for (const weekDir of weekDirs) {
-      const weekMatch = weekDir.name.match(/(\d+)/);
-      if (!weekMatch) continue;
-      const weekNum  = parseInt(weekMatch[1]);
-      const weekPath = path.join(trackPath, weekDir.name);
+    for (const phaseDir of phaseDirs) {
+      const phaseMatch = phaseDir.name.match(/(\d+)/);
+      if (!phaseMatch) continue;
+      const phaseNum  = parseInt(phaseMatch[1]);
+      const phasePath = path.join(trackPath, phaseDir.name);
 
-      // Read optional week.json for label
-      const weekConfigPath = path.join(weekPath, 'week.json');
-      const weekConfig = fs.existsSync(weekConfigPath)
-        ? JSON.parse(fs.readFileSync(weekConfigPath, 'utf-8'))
-        : { label: `Week ${weekNum}` };
+      // Read optional week.json/phase.json for label
+      const phaseConfigPath = path.join(phasePath, 'phase.json');
+      const weekConfigPath = path.join(phasePath, 'week.json');
+      const configPath = fs.existsSync(phaseConfigPath) ? phaseConfigPath : weekConfigPath;
+      
+      const phaseConfig = fs.existsSync(configPath)
+        ? JSON.parse(fs.readFileSync(configPath, 'utf-8'))
+        : { label: `Phase ${phaseNum}` };
 
-      // Collect all .md files in this week
-      const mdFiles = fs.readdirSync(weekPath)
+      // Collect all .md files in this phase
+      const mdFiles = fs.readdirSync(phasePath)
         .filter(f => f.endsWith('.md'))
         .sort((a, b) => {
           const na = parseInt(a.match(/\d+/)?.[0] || 0);
@@ -110,13 +115,13 @@ export function generateCurriculum() {
         });
 
       const days = mdFiles.map(file => {
-        const filePath = path.join(weekPath, file);
-        const { dayNum, title, time, difficulty, stars } = parseMd(filePath, weekDir.name, file);
+        const filePath = path.join(phasePath, file);
+        const { dayNum, title, time, difficulty, stars } = parseMd(filePath, phaseDir.name, file);
         return {
           day: dayNum,
           title,
-          // path relative to public/ so fetch('/content/system-design/Week 1/Day-1.md') works
-          file: `content/${trackId}/${weekDir.name}/${file}`,
+          // path relative to public/ 
+          file: `content/${trackId}/${phaseDir.name}/${file}`,
           stars,
           difficulty,
           time,
@@ -126,7 +131,7 @@ export function generateCurriculum() {
       days.sort((a, b) => a.day - b.day);
 
       if (days.length > 0) {
-        weeks.push({ week: weekNum, label: weekConfig.label, days });
+        weeks.push({ week: phaseNum, label: phaseConfig.label, days });
       }
     }
 

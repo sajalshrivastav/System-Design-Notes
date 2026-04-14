@@ -10,7 +10,7 @@ export default function LessonTable({ week, onNavigate, completedLessons = [] })
   return (
     <div className="lt-wrap">
       <div className="lt-header">
-        <span className="lt-week-badge">Week {week.week}</span>
+        <span className="lt-week-badge">Phase {week.week}</span>
         <span className="lt-week-title">{week.label}</span>
         <span className="lt-count">{week.days.length} lessons</span>
       </div>
@@ -19,7 +19,7 @@ export default function LessonTable({ week, onNavigate, completedLessons = [] })
         <table className="lt-table">
           <thead>
             <tr>
-              <th>Day</th>
+              <th>#</th>
               <th>Topic</th>
               <th></th>
             </tr>
@@ -34,7 +34,7 @@ export default function LessonTable({ week, onNavigate, completedLessons = [] })
                   onClick={() => onNavigate(week.week, day.day)}
                 >
                   <td className="lt-day">
-                    Day {String(day.day).padStart(2, '0')}
+                    {String(day.day).padStart(1, '0')}
                   </td>
                   <td className="lt-topic">
                     <div className="topic-name-wrap">

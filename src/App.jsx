@@ -25,7 +25,7 @@ renderer.heading = (text, level) => {
 renderer.code = (codeArg, langArg) => {
   const code = typeof codeArg === 'object' ? codeArg.text : codeArg;
   const language = typeof codeArg === 'object' ? codeArg.lang : langArg;
-  
+
   try {
     const validLanguage = (language && hljs.getLanguage(language)) ? language : '';
     if (validLanguage) {
@@ -59,7 +59,7 @@ export default function App() {
 
   const path = location.pathname;
   const parts = path.split('/').filter(Boolean);
-  
+
   let activeTrack = 'system-design';
   let activeWeekNum = 1;
   let activeDayNum = null;
@@ -74,15 +74,16 @@ export default function App() {
     if (parts[1]) activeTrack = parts[1];
   } else {
     activeTrack = parts[0];
-    if (parts[1] === 'week' && parts[2]) activeWeekNum = parseInt(parts[2], 10);
+    if ((parts[1] === 'week' || parts[1] === 'phase') && parts[2]) activeWeekNum = parseInt(parts[2], 10);
     if (parts[3] === 'day' && parts[4]) activeDayNum = parseInt(parts[4], 10);
+    else if (parts[3]) activeDayNum = parseInt(parts[3], 10);
     if (!parts[1]) {
       activeDayNum = null;
     }
   }
 
-  const [noteContent, setNoteContent]   = useState(null);
-  const [loading, setLoading]           = useState(false);
+  const [noteContent, setNoteContent] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [completedByTrack, setCompletedByTrack] = useState(() => {
     try {
@@ -101,10 +102,10 @@ export default function App() {
   const { getWeeks, getAllNotes, loading: notesLoading } = useNotes();
 
   // Stable memoized derivations — only recompute when track data or day changes
-  const filteredWeeks = useMemo(() => getWeeks(activeTrack),    [getWeeks, activeTrack]);
-  const allNotes      = useMemo(() => getAllNotes(activeTrack),  [getAllNotes, activeTrack]);
+  const filteredWeeks = useMemo(() => getWeeks(activeTrack), [getWeeks, activeTrack]);
+  const allNotes = useMemo(() => getAllNotes(activeTrack), [getAllNotes, activeTrack]);
 
-  const activeNote   = useMemo(
+  const activeNote = useMemo(
     () => activeDayNum > 0 ? allNotes.find(n => n.day === activeDayNum) ?? null : null,
     [allNotes, activeDayNum]
   );
@@ -112,8 +113,8 @@ export default function App() {
     () => allNotes.findIndex(n => n.day === activeDayNum),
     [allNotes, activeDayNum]
   );
-  const prevNote = currentIndex > 0                      ? allNotes[currentIndex - 1] : null;
-  const nextNote = currentIndex < allNotes.length - 1   ? allNotes[currentIndex + 1] : null;
+  const prevNote = currentIndex > 0 ? allNotes[currentIndex - 1] : null;
+  const nextNote = currentIndex < allNotes.length - 1 ? allNotes[currentIndex + 1] : null;
 
   // Track the file path we last fetched so we never double-fetch
   const lastFetchedFile = useRef(null);
@@ -171,14 +172,14 @@ export default function App() {
       });
     }
   }, [activeDayNum, activeTrack, noteContent, loading]);
-  
+
   const handleSetTrack = useCallback((newTrack) => {
     if (showQuestions) {
       navigate(`/explore/${newTrack}`);
     } else {
       if (activeDayNum === null) navigate(`/${newTrack}`);
       else if (activeDayNum === -1) navigate(`/explore/${newTrack}`);
-      else navigate(`/${newTrack}`); 
+      else navigate(`/${newTrack}`);
     }
     setIsSidebarOpen(false);
   }, [navigate, showQuestions, activeDayNum]);
@@ -187,7 +188,7 @@ export default function App() {
     if (w === -1 && d === -1) {
       navigate(`/explore/${activeTrack}`);
     } else {
-      navigate(`/${activeTrack}/week/${w}/day/${d}`);
+      navigate(`/${activeTrack}/phase/${w}/${d}`);
     }
     setIsSidebarOpen(false);
   }, [navigate, activeTrack]);
@@ -195,7 +196,7 @@ export default function App() {
   const handleDayChange = useCallback((day) => {
     if (day === null) navigate(`/${activeTrack}`);
     else if (day === -1) navigate(`/explore/${activeTrack}`);
-    
+
     setIsSidebarOpen(false);
   }, [navigate, activeTrack]);
 
@@ -216,8 +217,8 @@ export default function App() {
   return (
     <div className={[
       'layout',
-      !isSidebarOpen  ? 'sidebar-closed' : '',
-      isSidebarOpen   ? 'mobile-open'    : '',
+      !isSidebarOpen ? 'sidebar-closed' : '',
+      isSidebarOpen ? 'mobile-open' : '',
       activeDayNum === null && !showQuestions ? 'on-landing' : '',
     ].join(' ').trim()}>
 
@@ -235,7 +236,7 @@ export default function App() {
       </button>
 
       {activeDayNum !== null && activeDayNum !== -1 && (
-        <QuickNavigator 
+        <QuickNavigator
           weeks={filteredWeeks}
           activeWeekNum={activeWeekNum}
           activeDayNum={activeDayNum}
@@ -254,7 +255,7 @@ export default function App() {
         setActiveTrack={handleSetTrack}
         activeWeekNum={activeWeekNum}
         activeDayNum={activeDayNum}
-        onWeekChange={() => {}}
+        onWeekChange={() => { }}
         onDayChange={handleDayChange}
         isOpen={isSidebarOpen}
       />

@@ -13,9 +13,9 @@ export default function QuickNavigator({ weeks, activeWeekNum, activeDayNum, onN
         <div className="trigger-content">
           <span className="nav-label">Curriculum Index</span>
           <div className="active-path">
-            <span className="week-val">W{activeWeekNum || 1}</span>
+            <span className="week-val">P{activeWeekNum || 1}</span>
             <ChevronRight size={12} />
-            <span className="day-val">D{activeDayNum || 1}</span>
+            <span className="day-val">{activeDayNum || 1}</span>
           </div>
         </div>
         <div className={`trigger-icon ${isExpanded ? 'rotated' : ''}`}>
@@ -29,7 +29,7 @@ export default function QuickNavigator({ weeks, activeWeekNum, activeDayNum, onN
             {weeks.map(week => (
               <div key={week.week} className="q-week-group">
                 <div className={`q-week-header ${activeWeekNum === week.week ? 'active' : ''}`}>
-                  Week {week.week} — {week.label}
+                  Phase {week.week} — {week.label}
                 </div>
                 <div className="q-day-list">
                   {week.days.map(day => (

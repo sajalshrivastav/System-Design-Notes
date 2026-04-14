@@ -1,6 +1,6 @@
 import React from 'react';
-import { 
-  Home, 
+import {
+  Home,
   Compass
 } from 'lucide-react';
 
@@ -16,13 +16,13 @@ export default function Sidebar({
 
   return (
     <aside className={`modern-sidebar notion-style ${!isOpen ? 'collapsed' : ''}`}>
-      {/* ── Static Sidebar Brand ── */ }
+      {/* ── Static Sidebar Brand ── */}
       <div className="sidebar-brand-static">
         <div className="brand-icon-notion">
           <div className="brand-dot-notion" />
         </div>
         <div className="workspace-info">
-          <span className="brand-name-notion">FrontendForge</span>
+          <span className="brand-name-notion">Binary.Dev</span>
         </div>
       </div>
 
