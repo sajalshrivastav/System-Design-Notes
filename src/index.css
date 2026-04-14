@@ -2937,353 +2937,197 @@ body {
   color: var(--ti-color, #6366f1);
 }
 
-/* ════════════════════════════════════════════════════════════
-   VERTICAL JOURNEY + LESSON TABLE
-   ════════════════════════════════════════════════════════════ */
-
-/* Two-column wrapper */
-.journey-layout {
+/* ── Phase Pills (Match Track Switcher) ── */
+.phase-pills-bar {
   display: flex;
-  align-items: stretch;
-  /* both columns same height */
-  max-width: 1000px;
-  margin: 0 auto;
-  background: rgba(255, 255, 255, 0.015);
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  border-radius: 20px;
-  overflow: hidden;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-}
-
-/* ── Left: Vertical Journey — stretches to match right column ── */
-.journey-left {
-  width: 180px;
-  flex-shrink: 0;
-  border-right: 1px solid rgba(255, 255, 255, 0.06);
-  background: rgba(255, 255, 255, 0.01);
-  /* fills full height via align-items:stretch on parent */
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  padding: 0;
-  overflow: hidden;
-}
-
-.vj-wrap {
-  display: flex;
-  align-items: flex-start;
-  width: 100%;
-  padding: 0 0 0 12px;
-}
-
-.vj-svg {
-  flex-shrink: 0;
-  overflow: visible;
-  display: block;
-}
-
-/* Labels pinned by absolute top inside a relative container */
-.vj-labels {
-  position: relative;
-  flex: 1;
-  margin-left: 6px;
-}
-
-.vj-label {
-  position: absolute;
-  left: 0;
-  right: 4px;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  text-align: left;
-  padding: 5px 8px;
-  border-radius: 8px;
-  transition: background 0.2s ease;
-  font-family: var(--font);
-}
-
-.vj-label:hover {
-  background: rgba(255, 255, 255, 0.04);
-}
-
-.vj-label.active .vj-wnum {
-  color: #818cf8;
-}
-
-.vj-label.active .vj-wlabel {
-  color: var(--text);
-}
-
-.vj-wnum {
-  font-size: 9px;
-  font-weight: 700;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-family: var(--mono);
-  transition: color 0.2s;
-}
-
-.vj-wlabel {
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--text-dim);
-  transition: color 0.2s;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* ── Right: Lesson Table ── */
-.journey-right {
-  flex: 1;
-  min-width: 0;
-  padding: 28px 28px 32px;
-}
-
-.lt-wrap {
-  width: 100%;
-}
-
-.lt-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 20px;
-  flex-wrap: wrap;
-}
-
-.lt-week-badge {
-  font-family: var(--mono);
-  font-size: 11px;
-  font-weight: 700;
-  color: #818cf8;
-  background: rgba(99, 102, 241, 0.12);
-  border: 1px solid rgba(99, 102, 241, 0.2);
-  padding: 3px 10px;
-  border-radius: 6px;
-  white-space: nowrap;
-}
-
-.lt-week-title {
-  font-size: 20px;
-  font-weight: 700;
-  color: var(--text);
-  letter-spacing: -0.02em;
-}
-
-.lt-count {
-  margin-left: auto;
-  font-size: 11px;
-  color: var(--text-muted);
-  font-family: var(--mono);
-}
-
-/* Table */
-.lt-table-wrap {
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 14px;
-  overflow: hidden;
-}
-
-.lt-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 14px;
-}
-
-.topic-name-wrap {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-}
-
-.topic-check {
-  color: #10b981;
-  flex-shrink: 0;
-}
-
-
-
-.lt-table thead tr {
-  background: rgba(255, 255, 255, 0.03);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-.lt-table th {
-  padding: 11px 16px;
-  text-align: left;
-  font-size: 10px;
-  font-weight: 700;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-}
-
-.lt-row {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-  cursor: pointer;
-  transition: background 0.15s ease;
-}
-
-.lt-row:last-child {
-  border-bottom: none;
-}
-
-.lt-row:hover {
-  background: rgba(99, 102, 241, 0.05);
-}
-
-.lt-row:hover .lt-arrow {
-  opacity: 1;
-  transform: translateX(3px);
-}
-
-.lt-table td {
-  padding: 14px 16px;
-  vertical-align: middle;
-}
-
-.lt-day {
-  font-family: var(--mono);
-  font-size: 12px;
-  font-weight: 700;
-  color: #818cf8;
-  background: rgba(99, 102, 241, 0.08);
-  white-space: nowrap;
-  width: 72px;
-}
-
-.lt-topic {
-  font-weight: 500;
-  color: var(--text);
-  font-size: 14px;
-}
-
-.lt-diff {
-  white-space: nowrap;
-}
-
-.lt-time {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  color: var(--text-muted);
-  font-size: 12px;
-  white-space: nowrap;
-}
-
-.lt-cta {
-  width: 28px;
-  text-align: right;
-}
-
-.lt-arrow {
-  color: var(--text-muted);
-  opacity: 0;
-  transition: opacity 0.2s, transform 0.2s;
-}
-
-/* ── Mobile: stack vertically, journey becomes horizontal scroller ── */
-@media (max-width: 700px) {
-  .journey-layout {
-    display: none;
-    /* replaced by journey-layout-mobile */
-  }
-}
-
-/* Mobile stacked layout */
-.journey-layout-mobile {
-  display: flex;
-  flex-direction: column;
-  max-width: 100%;
-  background: rgba(255, 255, 255, 0.015);
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  border-radius: 16px;
-  overflow: hidden;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-}
-
-/* Top strip — horizontal scrollable journey */
-.journey-top {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-  background: rgba(255, 255, 255, 0.01);
-  padding: 16px 0 12px;
+  gap: 10px;
+  margin-bottom: 24px;
+  padding: 8px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 100px; /* Fully pill-shaped */
   overflow-x: auto;
-  overflow-y: hidden;
-  -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
+  width: fit-content;
 }
 
-.journey-top::-webkit-scrollbar {
+.phase-pills-bar::-webkit-scrollbar {
   display: none;
 }
 
-/* Horizontal journey scroll container */
-.hj-scroll-wrap {
-  padding: 0 16px;
-  min-width: max-content;
+.phase-pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 18px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 99px;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  color: var(--text-muted);
 }
 
-/* Bottom — lesson table */
-.journey-bottom {
-  padding: 20px 16px 24px;
+.phase-pill:hover {
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text-dim);
 }
 
-/* Tablet: keep two columns but tighten */
-@media (min-width: 701px) and (max-width: 900px) {
-  .journey-left {
-    width: 150px;
-  }
-
-  .journey-right {
-    padding: 20px 18px 24px;
-  }
-
-  .lt-table td {
-    padding: 11px 12px;
-  }
-
-  .lt-topic {
-    font-size: 13px;
-  }
+.phase-pill.active {
+  background: var(--blue-glow);
+  border-color: rgba(5, 150, 105, 0.2);
+  color: #fff;
 }
 
-/* Mobile lesson table tweaks */
-@media (max-width: 700px) {
-  .lt-week-title {
-    font-size: 16px;
-  }
-
-  .lt-count {
-    display: none;
-  }
-
-  /* Hide difficulty on very narrow screens */
-  .lt-table th:nth-child(3),
-  .lt-table td:nth-child(3) {
-    display: none;
-  }
-
-  .lt-table td {
-    padding: 12px 10px;
-  }
-
-  .lt-topic {
-    font-size: 13px;
-  }
-
-  .lt-day {
-    font-size: 11px;
-    width: 60px;
-  }
+.p-pill-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  opacity: 0;
+  transform: scale(0.4);
+  transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
+
+.phase-pill.active .p-pill-dot {
+  opacity: 1;
+  transform: scale(1);
+  box-shadow: 0 0 8px var(--green);
+}
+
+.p-pill-content {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.p-pill-num {
+  font-family: var(--mono);
+  font-size: 8px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 1px;
+}
+
+.p-pill-label {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* ── Modern Lesson List ── */
+.curriculum-list-container {
+  background: rgba(13, 13, 18, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  padding: 12px;
+  backdrop-filter: blur(20px);
+}
+
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  margin-bottom: 8px;
+}
+
+.lh-badge {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--green);
+  text-transform: uppercase;
+}
+
+.lh-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+  margin-top: 2px;
+}
+
+.lh-stats {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-family: var(--mono);
+}
+
+.lessons-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.lesson-item-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.lesson-item-row:hover {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.05);
+  transform: translateX(4px);
+}
+
+.li-status {
+  width: 24px;
+  display: flex;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.li-num {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.status-done {
+  color: var(--green);
+}
+
+.li-content {
+  flex: 1;
+}
+
+.li-title {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-dim);
+  transition: color 0.2s;
+}
+
+.lesson-item-row:hover .li-title {
+  color: #fff;
+}
+
+.li-action {
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: all 0.2s ease;
+  color: var(--text-muted);
+}
+
+.lesson-item-row:hover .li-action {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.lesson-item-row.is-done .li-title {
+  color: var(--text-muted);
+  text-decoration-line: none; /* User previously asked to remove strikethrough */
+}
+
 
 /* ── Structured Lesson Design (Fluid) ── */
 :root {

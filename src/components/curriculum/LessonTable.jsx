@@ -8,48 +8,45 @@ export default function LessonTable({ week, onNavigate, completedLessons = [] })
   if (!week) return null;
 
   return (
-    <div className="lt-wrap">
-      <div className="lt-header">
-        <span className="lt-week-badge">Phase {week.week}</span>
-        <span className="lt-week-title">{week.label}</span>
-        <span className="lt-count">{week.days.length} lessons</span>
+    <div className="curriculum-list-wrap">
+      <div className="list-header">
+        <div className="lh-left">
+          <span className="lh-badge">Phase {week.week}</span>
+          <h2 className="lh-title">{week.label}</h2>
+        </div>
+        <div className="lh-right">
+          <span className="lh-stats">{week.days.length} Lessons</span>
+        </div>
       </div>
 
-      <div className="lt-table-wrap">
-        <table className="lt-table">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Topic</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {week.days.map(day => {
-              const isCompleted = completedLessons.includes(day.day);
-              return (
-                <tr
-                  key={day.day}
-                  className={`lt-row ${isCompleted ? 'completed-row' : ''}`}
-                  onClick={() => onNavigate(week.week, day.day)}
-                >
-                  <td className="lt-day">
-                    {String(day.day).padStart(1, '0')}
-                  </td>
-                  <td className="lt-topic">
-                    <div className="topic-name-wrap">
-                      {isCompleted && <CheckCircle size={14} className="topic-check" />}
-                      {day.title}
-                    </div>
-                  </td>
-                  <td className="lt-cta">
-                    <ChevronRight size={14} className="lt-arrow" />
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+      <div className="lessons-list">
+        {week.days.map((day) => {
+          const isCompleted = completedLessons.includes(day.day);
+          
+          return (
+            <div 
+              key={day.day} 
+              className={`lesson-item-row ${isCompleted ? 'is-done' : ''}`}
+              onClick={() => onNavigate(week.week, day.day)}
+            >
+              <div className="li-status">
+                {isCompleted ? (
+                  <CheckCircle size={16} className="status-done" />
+                ) : (
+                  <span className="li-num">{day.day}</span>
+                )}
+              </div>
+              
+              <div className="li-content">
+                <span className="li-title">{day.title}</span>
+              </div>
+
+              <div className="li-action">
+                <ChevronRight size={16} className="li-arrow" />
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
