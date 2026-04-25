@@ -27,6 +27,14 @@
             "stars": 5,
             "difficulty": "Intermediate",
             "time": "1 hr"
+          },
+          {
+            "day": 4,
+            "title": "JavaScript  Function Composition, `pipe()` & `compose()`",
+            "file": "content/javascript/Phase 1/4.md",
+            "stars": 5,
+            "difficulty": "Beginner",
+            "time": "1 hr"
           }
         ]
       }
@@ -87,7 +95,7 @@
             "time": "1 hr"
           },
           {
-            "day": 582,
+            "day": 106,
             "title": "Coming Soon",
             "file": "content/js-patterns/Phase 2/All-Day.md",
             "stars": 5,

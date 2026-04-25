@@ -7,7 +7,8 @@ import { Menu, X } from 'lucide-react';
 
 import Sidebar from './components/Sidebar';
 import NoteView from './components/NoteView';
-import QuickNavigator from './components/QuickNavigator';
+import BottomNav from './components/BottomNav';
+import { TRACKS } from './data/tracks';
 import CodingQuestionsPage from './components/questions/CodingQuestionsPage';
 import useNotes from './hooks/useNotes';
 
@@ -84,6 +85,7 @@ export default function App() {
 
   const [noteContent, setNoteContent] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [completedByTrack, setCompletedByTrack] = useState(() => {
     try {
@@ -156,6 +158,24 @@ export default function App() {
 
     return () => { cancelled = true; };
   }, [activeDayNum, activeNote?.file]);
+
+  // ── Scroll Tracking ──────────────────────────────────────────────────
+  useEffect(() => {
+    if (!noteContent || noteContent === 'COMING_SOON') {
+      setScrollProgress(0);
+      return;
+    }
+
+    const handleScroll = () => {
+      const winScroll = document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+      setScrollProgress(Math.min(scrolled, 100));
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [noteContent]);
 
   // Handle Mark Complete
   useEffect(() => {
@@ -235,15 +255,7 @@ export default function App() {
         )}
       </button>
 
-      {activeDayNum !== null && activeDayNum !== -1 && (
-        <QuickNavigator
-          weeks={filteredWeeks}
-          activeWeekNum={activeWeekNum}
-          activeDayNum={activeDayNum}
-          onNavigate={handleNavigate}
-          isOpen={isSidebarOpen}
-        />
-      )}
+
 
       {isSidebarOpen && (
         <div className="mobile-overlay" onClick={() => setIsSidebarOpen(false)} />
@@ -280,10 +292,25 @@ export default function App() {
               completedLessons={completedByTrack[activeTrack] || []}
               totalLessons={allNotes.length}
               onShowQuestions={handleShowQuestions}
+              progress={scrollProgress}
             />
           )}
         </div>
       </main>
+
+      {/* Floating Bottom Navigation */}
+      {activeDayNum !== null && activeDayNum !== -1 && noteContent && noteContent !== 'COMING_SOON' && !loading && !showQuestions && (
+        <BottomNav
+          prev={prevNote}
+          next={nextNote}
+          onNavigate={(n) => navigate(`/${activeTrack}/phase/${n.weekNum}/${n.day}`)}
+          currentIndex={currentIndex}
+          total={allNotes.length}
+          trackLabel={TRACKS.find(t => t.id === activeTrack)?.label || 'Curriculum'}
+          progress={scrollProgress}
+        />
+      )}
+
     </div>
   );
 }

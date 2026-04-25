@@ -18,8 +18,10 @@ export default function Sidebar({
     <aside className={`modern-sidebar notion-style ${!isOpen ? 'collapsed' : ''}`}>
       {/* ── Static Sidebar Brand ── */}
       <div className="sidebar-brand-static">
-        <div className="brand-icon-notion">
-          <div className="brand-dot-notion" />
+        <div className="logo-stack-bg">
+          <div className="stack-layer top"></div>
+          <div className="stack-layer middle"></div>
+          <div className="stack-layer bottom"></div>
         </div>
         <div className="workspace-info">
           <span className="brand-name-notion">Binary.Dev</span>

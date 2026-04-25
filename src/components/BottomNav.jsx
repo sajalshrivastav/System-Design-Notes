@@ -1,35 +1,43 @@
-export default function BottomNav({ prev, next, onNavigate, currentIndex, total }) {
-  return (
-    <footer className="bottom-nav">
-      <div className="nav-container">
-        <button
-          className={`nav-btn prev ${!prev ? 'disabled' : ''}`}
-          onClick={() => onNavigate(prev)}
-          disabled={!prev}
-        >
-          <span className="arrow">←</span>
-          <div className="btn-text">
-            <span className="label">PREVIOUS</span>
-            <span className="title">{prev ? `Day-${prev.day}` : 'Start'}</span>
-          </div>
-        </button>
+import React from 'react';
+import { ChevronLeft, ChevronRight, List } from 'lucide-react';
 
-        <div className="nav-center">
-          <span className="progress">Note {currentIndex + 1} of {total}</span>
+export default function BottomNav({ prev, next, onNavigate, currentIndex, total, trackLabel, progress }) {
+  return (
+    <footer className="floating-bottom-nav">
+      {/* Visual progress line at the very top of the bar */}
+      <div className="bottom-nav-glass">
+        <div className="nav-progress-rail">
+          <div className="nav-progress-fill" style={{ width: `${progress}%` }} />
         </div>
 
-        <button
-          className={`nav-btn next ${!next ? 'disabled' : ''}`}
-          onClick={() => onNavigate(next)}
+        {/* Previous Button */}
+        <button 
+          className={`nav-action-btn ${!prev ? 'disabled' : ''}`}
+          onClick={() => prev && onNavigate(prev)}
+          disabled={!prev}
+        >
+          <ChevronLeft size={16} />
+          <span>Prev</span>
+        </button>
+
+        {/* Center Track Info (No more text progress) */}
+        <div className="nav-track-info">
+          <List size={16} className="track-icon" />
+          <span className="track-label">{trackLabel}</span>
+        </div>
+
+        {/* Next Button */}
+        <button 
+          className={`nav-action-btn ${!next ? 'disabled' : ''}`}
+          onClick={() => next && onNavigate(next)}
           disabled={!next}
         >
-          <div className="btn-text">
-            <span className="label">NEXT</span>
-            <span className="title">{next ? `Day-${next.day}` : 'Completed'}</span>
-          </div>
-          <span className="arrow">→</span>
+          <span>Next</span>
+          <ChevronRight size={16} />
         </button>
       </div>
     </footer>
   );
 }
+
+

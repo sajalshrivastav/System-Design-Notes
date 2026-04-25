@@ -26,28 +26,11 @@ export default function NoteView({
   completedLessons,
   totalLessons,
   onShowQuestions,
+  progress,
 }) {
   const curriculumRef = useRef(null);
   const isScrolled = useScrolled(40);
-  const [scrollProgress, setScrollProgress] = useState(0);
 
-  const scrollToCurriculum = () =>
-    curriculumRef.current?.scrollIntoView({ behavior: 'smooth' });
-
-  // ── Scroll Tracking ──────────────────────────────────────────────────
-  useEffect(() => {
-    if (!noteContent || noteContent === 'COMING_SOON') return;
-
-    const handleScroll = () => {
-      const winScroll = document.documentElement.scrollTop;
-      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-      const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
-      setScrollProgress(Math.min(scrolled, 100));
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [noteContent]);
 
   // ── Extract TOC ────────────────────────────────────────────────────────
   const toc = useMemo(() => {
@@ -174,7 +157,7 @@ export default function NoteView({
         isScrolled={isScrolled}
         onBack={() => onNavigate(-1, -1)}
         readingTime={readingTime}
-        progress={scrollProgress}
+        progress={progress}
       />
 
       <LessonLayout
