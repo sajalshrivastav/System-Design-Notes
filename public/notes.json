@@ -35,6 +35,30 @@
             "stars": 5,
             "difficulty": "Beginner",
             "time": "1 hr"
+          },
+          {
+            "day": 5,
+            "title": "Execution Context & Call Stack",
+            "file": "content/javascript/Phase 1/5.md",
+            "stars": 5,
+            "difficulty": "Beginner",
+            "time": "1 hr"
+          },
+          {
+            "day": 6,
+            "title": "Hoisting in JavaScript",
+            "file": "content/javascript/Phase 1/6.md",
+            "stars": 5,
+            "difficulty": "Beginner",
+            "time": "1 hr"
+          },
+          {
+            "day": 7,
+            "title": "Scope & Scope Chain in JavaScript",
+            "file": "content/javascript/Phase 1/7.md",
+            "stars": 5,
+            "difficulty": "Beginner",
+            "time": "1 hr"
           }
         ]
       }
@@ -95,7 +119,7 @@
             "time": "1 hr"
           },
           {
-            "day": 729,
+            "day": 609,
             "title": "Coming Soon",
             "file": "content/js-patterns/Phase 2/All-Day.md",
             "stars": 5,

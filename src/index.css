@@ -3017,7 +3017,7 @@ body {
   /* Fully pill-shaped */
   overflow-x: auto;
   scrollbar-width: none;
-  width: fit-content;
+  max-width: 100%;
 }
 
 .phase-pills-bar::-webkit-scrollbar {
